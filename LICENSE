@@ -1,0 +1,53 @@
+차 길들이기 (Chagil) — 소스 코드 및 APK 이용 조건
+Copyright (c) 2026 차 길들이기 팀. All rights reserved.
+
+이 저장소의 소스 코드, 퀘스트 데이터, 디자인, 문서, APK(이하 "작품")의 저작권은
+차 길들이기 팀(이하 "팀")에 있습니다. 아래에서 명시적으로 허락한 것 외의 모든 권리는
+팀이 보유합니다.
+
+1. 심사·평가용 이용 허락
+   공모전 주최·주관 기관, 심사위원, 그 위임을 받은 평가 담당자는 작품을 심사하고
+   평가하기 위한 목적으로만 다음을 할 수 있습니다.
+   - 소스 코드를 읽고, 내려받고, 빌드하는 것
+   - APK를 에뮬레이터나 시험용 기기에 설치하고 실행하는 것
+   - 심사 기록에 필요한 범위에서 화면을 캡처하거나 일부를 인용하는 것
+
+2. 허락하지 않는 것
+   팀의 서면 동의 없이 다음을 할 수 없습니다.
+   - 작품 또는 그 일부를 복제·배포·판매·대여하거나 앱 마켓 등에 게시하는 것
+   - 작품을 고치거나 작품을 바탕으로 2차적 저작물을 만드는 것
+   - 작품의 기획·퀘스트 구조·화면 구성을 다른 서비스나 제품에 쓰는 것
+
+3. 공개 저장소에 대하여
+   공모전 규정에 따라 이 저장소가 공개(Public)로 전환되더라도, 그것은 위 1의 심사를
+   위한 공개일 뿐 오픈소스 라이선스를 부여하는 것이 아닙니다. GitHub 이용약관이
+   다른 이용자에게 부여하는 보기·포크 권한은 그 약관이 정한 범위로 한정됩니다.
+
+4. 제3자 구성 요소
+   작품에 포함되거나 빌드 시 내려받는 제3자 구성 요소는 각자의 라이선스를 따릅니다.
+   목록은 NOTICE.md에 있습니다. 특히 Pleos Vehicle SDK는 42dot Inc.의
+   Software Development Kit License Agreement를 따르며, 이 저장소에는 포함되어 있지
+   않고 빌드할 때 Maven 저장소에서 받습니다. 이 문서는 어떤 제3자 구성 요소에 대해서도
+   권리를 부여하지 않습니다.
+
+5. 보증의 부인
+   작품은 공모전용 프로토타입이며 "있는 그대로" 제공됩니다. 팀은 상품성, 특정 목적
+   적합성, 권리 비침해를 포함한 어떤 보증도 하지 않으며, 작품의 이용으로 생긴 손해에
+   대해 책임지지 않습니다. 작품은 실제 차량 주행 중 사용을 위한 것이 아닙니다.
+
+6. 문의
+   위 범위를 넘는 이용을 원하면 저장소 Issues로 팀에 문의해 주세요.
+
+---------------------------------------------------------------------------
+English summary (the Korean text above prevails)
+
+Copyright (c) 2026 Team Chagil. All rights reserved.
+Contest organizers, judges and their delegated evaluators may read, download and
+build the source code and install and run the APK solely to judge and evaluate
+this contest entry. No other right is granted: no copying, redistribution,
+publication, modification, derivative works or reuse of the concept without the
+team's written consent. Making the repository public for judging does not grant
+an open-source license. Third-party components keep their own licenses (see
+NOTICE.md); the Pleos Vehicle SDK is governed by 42dot's SDK License Agreement and
+is not included in this repository. Provided "AS IS", without warranty of any kind.
+Not intended for use while driving.

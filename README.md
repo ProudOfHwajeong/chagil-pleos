@@ -32,7 +32,7 @@
 ### 1. APK 설치
 
 ```sh
-adb install -r "apk/TEAM_차길들이기_release.apk"
+adb install -r "apk/컬러팡_홍보팀_차길들이기_release.apk"
 ```
 
 기기가 여러 대 연결되어 있으면 `adb -s <기기 serial> install -r ...` 로 대상을 지정합니다. 설치 후 앱 목록에서 차 길들이기를 엽니다.
@@ -109,7 +109,7 @@ keyPassword=...
 
 ## APK 파일 위치
 
-- 저장소 안: [apk/TEAM_차길들이기_release.apk](apk/) (release 서명, 약 22MB)
+- 저장소 안: [apk/컬러팡_홍보팀_차길들이기_release.apk](apk/컬러팡_홍보팀_차길들이기_release.apk) (release 서명, 약 22MB)
 - 백업: [GitHub Release v0.1.0](../../releases/tag/v0.1.0)
 
 ## 프로젝트 구조

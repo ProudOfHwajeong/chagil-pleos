@@ -19,9 +19,8 @@
 ## B. APK
 
 - [ ] `apk/` 폴더에 올린다. 누가: 통합(release).
-- [ ] 파일명은 공백 없이 `팀명_앱이름_release.apk` 형식. 권장: `<팀명>_차길들이기_release.apk`
-  - 지금은 자리표시자 `TEAM`이다. 팀명은 팀이 확정하고, 받으면 통합이 파일명을 바꾼다.
-  - 팀명에 공백, `/`, `:`가 있으면 `_`로 바꾼다. 신청서에 적은 팀명과 같은 글자로 쓴다.
+- [x] 파일명은 공백 없이 `팀명_앱이름_release.apk` 형식. 팀명은 컬러팡 홍보팀이다.
+  - 공백은 `_`로 바꿨다. 파일명: `컬러팡_홍보팀_차길들이기_release.apk`
 - [ ] 실행 가능한 release 버전. 누가: 통합.
   - `./gradlew assembleRelease`의 결과물이어야 한다. 서명되지 않은 `*-release-unsigned.apk`는 설치가 안 되므로 제출할 수 없다.
   - 서명 키는 저장소 밖(`~/.chagil-signing/`)에 두고, 루트의 git-ignored `keystore.properties`가 가리키게 한다.
@@ -39,7 +38,7 @@
 - [x] 실행 방법: APK 설치 명령, 소스 빌드 명령(JDK 17, `./gradlew assembleRelease`), 앱을 실행한 뒤 첫 화면 설명
 - [x] 테스트 환경과 필요한 설정: Android Automotive OS API 34, 가로 화면, 필요한 권한(아래 D), Vehicle Service가 없으면 자동으로 시뮬레이션 모드가 된다는 점, 수동 전환 방법, 주차(P) 상태에서만 드릴이 열린다는 점
 - [x] Pleos Connect 에뮬레이터 버전과 화면 규격: `Pleos Connect v2.1.0 (AAOS API 34, arm64), 2560×1440 가로, density 160`, Vehicle SDK 2.3.2, Virtual Console에서 쓴 카드(Wipers, Gear Selection, Defroster, Exterior Lights, Steering Wheel Heat)
-- [ ] APK 파일 위치 또는 Release 링크: `apk/<팀명>_차길들이기_release.apk`
+- [x] APK 파일 위치 또는 Release 링크: `apk/컬러팡_홍보팀_차길들이기_release.apk`
 - [x] (권장) 프로토타입 범위 절: 무엇이 Vehicle SDK로 실제 판정되고 무엇이 시뮬레이션인지 표로 보여 준다. 공모전 약관 제9조 제2항의 오인 방지를 위한 것이다.
 - [x] (권장) LICENSE, PRIVACY, NOTICE 링크와 42dot·현대자동차그룹이 만들거나 보증한 앱이 아니라는 한 줄
 
@@ -67,4 +66,4 @@
 - [ ] 11-23(월)까지 Public을 유지한다. 그 사이 저장소 이름 변경, 삭제, 비공개 전환은 하지 않는다. 전환한 뒤 로그아웃한 창에서 주소와 APK 경로가 열리는지 확인한다.
 - [ ] 공개가 어렵다면 대안으로, 소스와 APK를 묶은 압축 파일의 내려받기 주소를 마감 전에 접수 메일로 보낸다.
 - [ ] Collaborator 초대는 필요 없다.
-- [ ] 커밋 작성자 이름과 이메일이 공개되는 것에 대해 팀이 결정한다([REVIEW.md](REVIEW.md) 9장).
+- [x] 커밋 작성자 이름과 이메일을 팀명으로 바꿨다([REVIEW.md](REVIEW.md) 9장).

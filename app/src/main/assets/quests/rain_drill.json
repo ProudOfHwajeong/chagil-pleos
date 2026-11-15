@@ -1,9 +1,9 @@
 {
   "id": "rain_drill",
   "title": "폭우 드릴",
-  "subtitle": "전조등 · 와이퍼 · 김서림, 45초",
+  "subtitle": "전조등 · 와이퍼 · 김서림",
   "level": "L1",
-  "limitSec": 45,
+  "limitSec": 60,
   "zone": "windshield",
   "availability": "open",
   "label": null,
@@ -15,7 +15,7 @@
     {
       "id": "lowbeam",
       "label": "전조등 켜기",
-      "instruction": "전조등을 켜 보세요",
+      "instruction": "전조등을 켜세요",
       "voice": "왼쪽 레버 끝 다이얼을 전조등 그림까지 돌려 보세요.",
       "control": "LIGHT_STALK",
       "read": "LowBeam.switch",
@@ -23,14 +23,15 @@
       "stableMs": 1000,
       "alreadyOn": "pass",
       "ifUnreadable": "selfCheck",
+      "ifNoChange": "selfCheck",
       "wrong": {
         "AUTOMATIC": {
           "text": "AUTO 말고 전조등이에요",
           "voice": "AUTO는 바깥 밝기만 봐요. 낮 폭우엔 안 켜질 수 있어요. 끝까지 돌려 전조등에 맞춰요."
         },
         "DAYTIME_RUNNING": {
-          "text": "지금은 주간등이에요",
-          "voice": "주간등만으로는 뒤에서 잘 안 보여요. 전조등 그림까지 돌려 보세요."
+          "text": "지금은 미등 칸이에요",
+          "voice": "미등만으론 뒤에서 잘 안 보여요. 끝까지 돌려 전조등에 맞춰요."
         },
         "OFF": {
           "text": "지금은 꺼짐이에요",
@@ -44,66 +45,62 @@
     },
     {
       "id": "wiper_lo",
-      "label": "와이퍼 LO",
-      "instruction": "와이퍼를 LO로",
-      "voice": "와이퍼 레버를 LO 칸에 두세요. 유리가 말라 있으면 레버를 당겨 워셔액부터 뿌려요.",
+      "label": "와이퍼 켜기",
+      "instruction": "와이퍼를 LO나 HI에 두세요",
+      "voice": "와이퍼 레버를 LO나 HI에 두세요. 비가 세면 HI예요.",
       "control": "WIPER_STALK",
       "read": "Wiper.switch",
-      "toAnyOf": ["CONTINUOUS_LEVEL_1", "INTERMITTENT_LEVEL_1"],
+      "toAnyOf": ["INTERMITTENT_LEVEL_1", "CONTINUOUS_LEVEL_1", "CONTINUOUS_LEVEL_2"],
       "stableMs": 1000,
       "alreadyOn": "pass",
       "ifUnreadable": "selfCheck",
       "wrong": {
         "MIST": {
           "text": "지금은 '한 번 닦기'예요",
-          "voice": "MIST는 한 번만 닦아요. 반대쪽으로 옮겨 LO에 두세요."
+          "voice": "MIST는 한 번만 닦아요. LO나 HI에 두세요."
         },
         "AUTO": {
           "text": "AUTO는 센서에 맡겨요",
-          "voice": "AUTO도 닦지만, 오늘은 직접 LO로 맞춰 봐요. 같은 쪽으로 한 칸 더요."
-        },
-        "CONTINUOUS_LEVEL_2": {
-          "text": "지금은 HI, 가장 빨라요",
-          "voice": "HI는 가장 빠른 칸이에요. 한 칸만 되돌려 LO에 두세요."
+          "voice": "AUTO도 닦지만, 오늘은 직접 LO나 HI에 맞춰 봐요."
         },
         "CONTINUOUS_LEVEL_3": {
-          "text": "LO보다 빠른 칸이에요",
-          "voice": "너무 빠른 칸이에요. 한 칸씩 되돌려 LO에 두세요."
+          "text": "아주 빠른 칸이에요",
+          "voice": "LO나 HI 칸에 두세요."
         },
         "CONTINUOUS_LEVEL_4": {
-          "text": "LO보다 빠른 칸이에요",
-          "voice": "너무 빠른 칸이에요. 한 칸씩 되돌려 LO에 두세요."
+          "text": "아주 빠른 칸이에요",
+          "voice": "LO나 HI 칸에 두세요."
         },
         "CONTINUOUS_LEVEL_5": {
-          "text": "LO보다 빠른 칸이에요",
-          "voice": "너무 빠른 칸이에요. 한 칸씩 되돌려 LO에 두세요."
+          "text": "아주 빠른 칸이에요",
+          "voice": "LO나 HI 칸에 두세요."
         },
         "INTERMITTENT_LEVEL_2": {
           "text": "지금은 띄엄띄엄 닦아요",
-          "voice": "간헐 칸이에요. 폭우엔 부족해요. LO로 옮겨 보세요."
+          "voice": "LO 칸으로 옮겨 보세요."
         },
         "INTERMITTENT_LEVEL_3": {
           "text": "지금은 띄엄띄엄 닦아요",
-          "voice": "간헐 칸이에요. 폭우엔 부족해요. LO로 옮겨 보세요."
+          "voice": "LO 칸으로 옮겨 보세요."
         },
         "INTERMITTENT_LEVEL_4": {
           "text": "지금은 띄엄띄엄 닦아요",
-          "voice": "간헐 칸이에요. 폭우엔 부족해요. LO로 옮겨 보세요."
+          "voice": "LO 칸으로 옮겨 보세요."
         },
         "INTERMITTENT_LEVEL_5": {
           "text": "지금은 띄엄띄엄 닦아요",
-          "voice": "간헐 칸이에요. 폭우엔 부족해요. LO로 옮겨 보세요."
+          "voice": "LO 칸으로 옮겨 보세요."
         }
       },
       "where": {
-        "text": "와이퍼 레버, LO 글자 칸",
-        "voice": "핸들 옆 와이퍼 레버예요. 레버에 적힌 LO 칸에 맞추면 돼요."
+        "text": "와이퍼 레버, LO나 HI 칸",
+        "voice": "핸들 옆 와이퍼 레버예요. 레버에 적힌 LO나 HI 칸에 맞추면 돼요."
       }
     },
     {
       "id": "defrost_front",
       "label": "앞유리 김서림 제거",
-      "instruction": "김서림 버튼을 눌러요",
+      "instruction": "앞유리 김서림 버튼을 누르세요",
       "voice": "공조 패널에서 앞유리 그림 버튼을 눌러 보세요.",
       "control": "HVAC_FRONT_DEFROST",
       "read": "HVAC.defroster.FRONT",
@@ -111,6 +108,7 @@
       "stableMs": 1000,
       "alreadyOn": "pass",
       "ifUnreadable": "selfCheck",
+      "ifNoChange": "selfCheck",
       "where": {
         "text": "공조 패널, 앞유리 그림 버튼",
         "voice": "공조 패널, 앞유리 그림이 있는 버튼이에요. 물결 화살표가 위로 올라가요."
@@ -119,7 +117,7 @@
     {
       "id": "restore_wiper",
       "label": "와이퍼 끄기",
-      "instruction": "와이퍼를 꺼 주세요",
+      "instruction": "와이퍼를 끄세요",
       "voice": "좋아요. 이제 와이퍼를 OFF로 되돌려요.",
       "control": "WIPER_STALK",
       "read": "Wiper.switch",
@@ -134,8 +132,8 @@
           "voice": "AUTO는 물이 닿으면 다시 움직여요. OFF까지 옮겨 주세요."
         },
         "CONTINUOUS_LEVEL_2": {
-          "text": "반대쪽, HI로 갔어요",
-          "voice": "더 빠른 칸으로 갔어요. 반대로 옮겨 OFF에 두세요."
+          "text": "지금은 HI예요",
+          "voice": "HI는 가장 빠른 칸이에요. OFF 칸에 두세요."
         }
       },
       "where": {

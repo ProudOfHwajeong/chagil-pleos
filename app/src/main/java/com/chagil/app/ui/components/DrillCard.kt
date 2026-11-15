@@ -104,8 +104,8 @@ fun DrillCard(
             Text(title, style = t.headline, color = c.text, maxLines = 1)
             Text(subtitle, style = t.body, color = c.textSecondary, maxLines = 2, overflow = TextOverflow.Ellipsis)
         }
-        Spacer(Modifier.weight(1f, fill = false))
-        Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+        Spacer(Modifier.weight(1f))
+        Row(Modifier.fillMaxWidth().heightIn(min = 76.dp), verticalAlignment = Alignment.CenterVertically) {
             Text(meta, style = t.label, color = c.textSecondary, modifier = Modifier.weight(1f))
             if (open) {
                 Box(

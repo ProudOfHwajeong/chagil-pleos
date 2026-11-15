@@ -48,7 +48,7 @@ fun SecondaryButton(
     enabled: Boolean = true,
 ) {
     val c = ChagilTheme.colors
-    BigButton(text, onClick, modifier, icon, enabled, container = c.surfaceRaised, content = c.text, border = c.outline)
+    BigButton(text, onClick, modifier, icon, enabled, container = c.surfaceRaised, content = c.text, border = c.cockpitLine) // cockpitLine: ≥2.5:1 boundary vs surface (outline was 1.4:1)
 }
 
 /** Compact 76dp button for top bars (e.g. 그만하기 / 닫기). Counts toward the 2-button rule. */
@@ -68,7 +68,7 @@ fun TopBarButton(text: String, onClick: () -> Unit, modifier: Modifier = Modifie
             ChagilIconView(icon, c.text, size = 28.dp)
             Spacer(Modifier.width(ChagilSpacing.s))
         }
-        Text(text, style = ChagilTheme.type.label.copy(fontSize = ChagilTheme.type.title.fontSize), color = c.text, maxLines = 1)
+        Text(text, style = ChagilTheme.type.label.copy(fontSize = ChagilTheme.type.bodyLarge.fontSize), color = c.text, maxLines = 1)
     }
 }
 

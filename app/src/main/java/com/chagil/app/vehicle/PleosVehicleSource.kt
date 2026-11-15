@@ -66,7 +66,7 @@ class PleosVehicleSource(
         val v = try {
             Vehicle(appContext).also { it.initialize() }
         } catch (t: Throwable) {
-            diagnostics.add("Vehicle SDK 초기화 실패 · ${t.shortMessage()}")
+            diagnostics.add("Vehicle SDK 초기화 안 됨 · ${t.shortMessage()}")
             throw IllegalStateException("Vehicle SDK initialize failed", t)
         }
         vehicle = v
@@ -84,7 +84,7 @@ class PleosVehicleSource(
         scope = null
         unregister.forEach { runCatching(it) }
         unregister.clear()
-        vehicle?.let { v -> runCatching { v.release() }.onFailure { diagnostics.add("SDK release 실패 · ${it.shortMessage()}") } }
+        vehicle?.let { v -> runCatching { v.release() }.onFailure { diagnostics.add("SDK 정리 안 됨 · ${it.shortMessage()}") } }
         vehicle = null
         _readings.value = unknownAll()
     }
@@ -199,7 +199,7 @@ class PleosVehicleSource(
         val count = (failures[signal] ?: 0) + 1
         failures[signal] = count
         if (count == UNREADABLE_AFTER) {
-            diagnostics.add("${signal.key} 읽기 실패 · ${error?.shortMessage() ?: "값 없음"}")
+            diagnostics.add("${signal.key} 읽기 안 됨 · ${error?.shortMessage() ?: "값 없음"}")
         }
         if (count >= UNREADABLE_AFTER) {
             _readings.update { if (it[signal] == Reading.Unreadable) it else it + (signal to Reading.Unreadable) }

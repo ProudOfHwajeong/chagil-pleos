@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -81,18 +82,20 @@ fun SimSwitchRow(
     val c = ChagilTheme.colors
     Column(modifier, verticalArrangement = Arrangement.spacedBy(ChagilSpacing.xs)) {
         Text(label, style = ChagilTheme.type.label, color = c.textSecondary)
-        FlowRow(horizontalArrangement = Arrangement.spacedBy(ChagilSpacing.s), verticalArrangement = Arrangement.spacedBy(ChagilSpacing.s)) {
+        FlowRow(horizontalArrangement = Arrangement.spacedBy(ChagilSpacing.targetGap), verticalArrangement = Arrangement.spacedBy(ChagilSpacing.s)) {
             options.forEach { opt ->
                 val on = opt == selected
                 Row(
                     Modifier
                         .heightIn(min = ChagilSpacing.touchMin)
+                        .widthIn(min = ChagilSpacing.touchMin)
                         .clip(ChagilShapes.medium)
                         .background(if (on) c.sim else c.surfaceRaised)
                         .clickable(role = Role.RadioButton) { onSelect(opt) }
                         .semantics { this.selected = on }
                         .padding(horizontal = 22.dp),
                     verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center,
                 ) {
                     Text(display(opt), style = ChagilTheme.type.label, color = if (on) c.onSim else c.text, maxLines = 1)
                 }

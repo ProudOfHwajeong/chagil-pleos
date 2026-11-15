@@ -12,7 +12,7 @@
   "steps": [
     {"id": "lowbeam", "label": "전조등 켜기", "instruction": "전조등을 켜 보세요", "voice": "전조등을 켜 보세요.",
      "control": "LIGHT_STALK", "read": "LowBeam.switch", "to": "ON", "stableMs": 1000,
-     "alreadyOn": "pass", "ifUnreadable": "selfCheck",
+     "alreadyOn": "pass", "ifUnreadable": "selfCheck", "ifNoChange": "selfCheck",
      "wrong": {"AUTOMATIC": {"text": "지금은 오토예요. 한 칸 더 돌려요", "voice": "지금은 오토예요. 한 칸 더 돌려 보세요."}},
      "where": {"text": "왼쪽 레버 끝을 돌려요", "voice": "핸들 왼쪽 레버 끝을 돌려요."}},
     {"id": "wiper1", "label": "와이퍼 한 단계", "instruction": "와이퍼를 한 단계 켜 보세요",

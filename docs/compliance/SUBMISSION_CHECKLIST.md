@@ -35,13 +35,13 @@
 
 ## C. README.md (소유: `feat/screens` — 아래 5개가 다 있어야 함)
 
-- [ ] 앱 이름 및 한 줄 소개 — "차 길들이기 — 차를 세워 두고 진짜 레버와 버튼을 움직이면, 차가 직접 정답을 판정하는 차 기능 실습 앱"
-- [ ] 실행 방법 — APK 설치 명령, 소스 빌드 명령(JDK 17, `./gradlew assembleRelease`), 앱 실행 후 첫 화면 설명
-- [ ] 테스트 환경 및 필요한 설정 — Android Automotive OS API 34, 가로 화면, 필요한 권한(아래 D), Vehicle Service가 없으면 자동 **시뮬레이션 모드**, 수동 전환 방법, 주차(P) 상태에서만 드릴이 열린다는 점
-- [ ] **Pleos Connect 에뮬레이터 버전과 화면 규격** — `Pleos Connect v2.1.0 (AAOS API 34, arm64), 2560×1440 가로, density <팀이 adb shell wm density로 확인한 값>`, Vehicle SDK 2.3.2, Virtual Console에서 쓴 카드(Wipers·Gear Selection·Defroster·Exterior Lights·Steering Wheel Heat)
+- [x] 앱 이름 및 한 줄 소개 — "차 길들이기 — 차를 세워 두고 진짜 레버와 버튼을 움직이면, 차가 직접 정답을 판정하는 차 기능 실습 앱"
+- [x] 실행 방법 — APK 설치 명령, 소스 빌드 명령(JDK 17, `./gradlew assembleRelease`), 앱 실행 후 첫 화면 설명
+- [x] 테스트 환경 및 필요한 설정 — Android Automotive OS API 34, 가로 화면, 필요한 권한(아래 D), Vehicle Service가 없으면 자동 **시뮬레이션 모드**, 수동 전환 방법, 주차(P) 상태에서만 드릴이 열린다는 점
+- [x] **Pleos Connect 에뮬레이터 버전과 화면 규격** — `Pleos Connect v2.1.0 (AAOS API 34, arm64), 2560×1440 가로, density 160`, Vehicle SDK 2.3.2, Virtual Console에서 쓴 카드(Wipers·Gear Selection·Defroster·Exterior Lights·Steering Wheel Heat)
 - [ ] APK 파일 위치 또는 Release 링크 — `apk/<팀명>_차길들이기_release.apk`
-- [ ] (권장) "프로토타입 범위" 절 — 무엇이 Vehicle SDK로 실제 판정되고 무엇이 시뮬레이션인지 표로. 공모전 약관 제9조② 오인 방지.
-- [ ] (권장) LICENSE·PRIVACY·NOTICE 링크, "42dot·현대자동차그룹이 만들거나 보증한 앱이 아님" 한 줄
+- [x] (권장) "프로토타입 범위" 절 — 무엇이 Vehicle SDK로 실제 판정되고 무엇이 시뮬레이션인지 표로. 공모전 약관 제9조② 오인 방지.
+- [x] (권장) LICENSE·PRIVACY·NOTICE 링크, "42dot·현대자동차그룹이 만들거나 보증한 앱이 아님" 한 줄
 
 ## D. 앱 안에서 지킬 것 (심사자가 설치해 볼 때)
 

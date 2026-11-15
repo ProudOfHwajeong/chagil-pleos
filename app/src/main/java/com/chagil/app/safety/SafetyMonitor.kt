@@ -37,8 +37,9 @@ data class SafetyStatus(val level: SafetyLevel, val driverConfirmed: Boolean) {
  * - gear == PARK → L2.
  * - anything else (UNKNOWN / NEUTRAL / unreadable / not yet read) → L1; the driver may confirm.
  * - Entering L0 (e.g. P → D) clears the driver's confirmation.
+ * - The car reading GEAR_NEUTRAL also clears it (and blocks it): N can roll, so the driver must move to P.
  */
-class SafetyMonitor(hub: VehicleSignalHub, scope: CoroutineScope) {
+class SafetyMonitor(private val hub: VehicleSignalHub, scope: CoroutineScope) {
 
     private val _confirmed = MutableStateFlow(false)
     val driverConfirmed: StateFlow<Boolean> = _confirmed.asStateFlow()
@@ -51,18 +52,20 @@ class SafetyMonitor(hub: VehicleSignalHub, scope: CoroutineScope) {
 
     init {
         scope.launch {
-            combine(hub.readings, hub.uxRestricted) { readings, ux -> levelFor(readings[Signal.GEAR], ux) }
-                .collect { level ->
-                    if (level == SafetyLevel.L0_DRIVING) _confirmed.value = false
+            combine(hub.readings, hub.uxRestricted) { readings, ux -> readings[Signal.GEAR] to ux }
+                .collect { (gear, ux) ->
+                    val level = levelFor(gear, ux)
+                    if (level == SafetyLevel.L0_DRIVING || isNeutral(gear)) _confirmed.value = false
                     _level.value = level
                     publish()
                 }
         }
     }
 
-    /** Driver answered "네, P에 두었어요". Ignored while driving. */
+    /** Driver answered "네, P에 두었어요". Ignored while driving or while the car reads N. */
     fun confirmParkedByDriver() {
         if (_level.value == SafetyLevel.L0_DRIVING) return
+        if (isNeutral(hub.readings.value[Signal.GEAR])) return
         _confirmed.value = true
         publish()
     }
@@ -79,6 +82,8 @@ class SafetyMonitor(hub: VehicleSignalHub, scope: CoroutineScope) {
     }
 
     companion object {
+        private fun isNeutral(gear: Reading?): Boolean = (gear as? Reading.Value)?.raw == Raw.GEAR_NEUTRAL
+
         fun levelFor(gear: Reading?, uxRestricted: Boolean?): SafetyLevel {
             val raw = (gear as? Reading.Value)?.raw
             return when {

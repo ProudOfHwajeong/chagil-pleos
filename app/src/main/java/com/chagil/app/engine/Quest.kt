@@ -90,6 +90,11 @@ data class Step(
     val alreadyOn: String? = null,
     /** "selfCheck": when the car cannot report the value, the driver taps "켰어요". */
     val ifUnreadable: String? = null,
+    /**
+     * "selfCheck": also offer "켰어요" when a readable value has not changed for 8 s. Only for controls whose
+     * console/car mapping is not verified (the button may not move this signal). Never on Wiper.switch.
+     */
+    val ifNoChange: String? = null,
     /** Raw value → hint shown immediately when the reading changes to that value. */
     val wrong: Map<String, Speech> = emptyMap(),
     /** Shown on the time-out screen: where this control is. */
@@ -102,6 +107,7 @@ data class Step(
     val isRestore: Boolean get() = role.equals("restore", ignoreCase = true)
     val passIfAlreadyOn: Boolean get() = alreadyOn == null || alreadyOn.equals("pass", ignoreCase = true)
     val selfCheckIfUnreadable: Boolean get() = ifUnreadable.equals(SELF_CHECK, ignoreCase = true)
+    val selfCheckIfNoChange: Boolean get() = ifNoChange.equals(SELF_CHECK, ignoreCase = true)
 
     fun matches(raw: String): Boolean = Condition.matches(raw, to, toAnyOf, notAnyOf)
 

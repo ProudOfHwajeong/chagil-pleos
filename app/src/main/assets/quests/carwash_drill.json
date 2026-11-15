@@ -1,7 +1,7 @@
 {
   "id": "carwash_drill",
   "title": "세차 대비 드릴",
-  "subtitle": "자동세차 전 와이퍼 끄기, 30초",
+  "subtitle": "자동세차 전 와이퍼 끄기",
   "level": "L1",
   "limitSec": 30,
   "zone": "windshield",
@@ -15,7 +15,7 @@
     {
       "id": "wiper_off",
       "label": "와이퍼 AUTO 끄기",
-      "instruction": "와이퍼를 OFF로",
+      "instruction": "와이퍼를 OFF에 두세요",
       "voice": "와이퍼 레버를 OFF 칸에 두세요.",
       "control": "WIPER_STALK",
       "read": "Wiper.switch",
@@ -33,12 +33,12 @@
           "voice": "MIST는 한 번 닦는 칸이에요. 레버를 OFF 칸에 두세요."
         },
         "CONTINUOUS_LEVEL_1": {
-          "text": "반대쪽, LO로 갔어요",
-          "voice": "LO는 계속 닦는 칸이에요. 반대로 옮겨 OFF에 두세요."
+          "text": "지금은 LO예요",
+          "voice": "LO는 계속 닦는 칸이에요. OFF 칸에 두세요."
         },
         "CONTINUOUS_LEVEL_2": {
-          "text": "반대쪽, HI로 갔어요",
-          "voice": "HI는 가장 빠른 칸이에요. 반대로 끝까지 옮겨 OFF에 두세요."
+          "text": "지금은 HI예요",
+          "voice": "HI는 가장 빠른 칸이에요. OFF 칸에 두세요."
         },
         "INTERMITTENT_LEVEL_1": {
           "text": "지금은 간헐 칸이에요",

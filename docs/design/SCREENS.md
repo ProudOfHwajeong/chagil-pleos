@@ -122,9 +122,8 @@ Row(간격 32)
  │   InstructionPanel(tone CALM, headline "괜찮아요. 여기 있어요", voice = 못 찾은 단계 where.voice)
  │   24dp
  │   ControlLocator(point = 못 찾은 단계 control, tone ATTENTION, weight 1)   ← 드릴 화면보다 크게(같은 영역 전부)
- │   24dp
- │   Row: PrimaryButton "다시"(RETRY) · 24 · SecondaryButton "나중에"
  └ 단계 패널(460dp): StepList — 통과한 단계 DONE, 시간 안에 못 한 첫 단계 ATTENTION(!), 그 뒤 PENDING. CountdownRing 없음.
+     아래(Spacer weight 1 뒤): PrimaryButton "다시"(RETRY), 24, SecondaryButton "나중에" — 둘 다 fillMaxWidth (§6 완료 화면과 같은 자리)
 ```
 - headline **"괜찮아요. 여기 있어요"** (마침표 뒤 줄바꿈 허용 — 어절 줄바꿈 적용됨)
 - voice 예 **"공조 패널, 앞유리 그림이 있는 버튼이에요."** (= JSON `where.voice`, 없으면 `ControlPoint.where`)

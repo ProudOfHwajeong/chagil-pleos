@@ -43,6 +43,7 @@ fun StatusChip(
     modifier: Modifier = Modifier,
     icon: ChagilIcon? = null,
     pulsingDot: Boolean = false,
+    trailingIcon: ChagilIcon? = null,
 ) {
     Row(
         modifier
@@ -56,6 +57,10 @@ fun StatusChip(
         if (icon != null) ChagilIconView(icon, color, size = 26.dp) else StatusDot(color, pulsing = pulsingDot)
         Spacer(Modifier.width(ChagilSpacing.s))
         Text(text, style = ChagilTheme.type.label, color = color, maxLines = 1)
+        if (trailingIcon != null) {
+            Spacer(Modifier.width(ChagilSpacing.xs))
+            ChagilIconView(trailingIcon, color, size = 26.dp)
+        }
     }
 }
 
@@ -85,12 +90,14 @@ fun SafetyChip(level: SafetyChipLevel, modifier: Modifier = Modifier, confirmedB
     }
 }
 
-/** Signal source chip: "실차 신호" (Vehicle SDK) or "시뮬레이션". */
+/** Signal source chip: "차 신호" (Vehicle SDK) or "시뮬레이션". */
 @Composable
-fun SourceChip(simulation: Boolean, modifier: Modifier = Modifier) {
+fun SourceChip(simulation: Boolean, modifier: Modifier = Modifier, tappable: Boolean = false) {
     val c = ChagilTheme.colors
-    if (simulation) StatusChip("시뮬레이션", c.sim, c.simContainer, modifier)
-    else StatusChip("실차 신호", c.primary, c.primaryContainer, modifier, pulsingDot = true)
+    // Tappable in SIMULATION: say what a tap does, so judges find the simulator without the README.
+    if (simulation && tappable) StatusChip("시뮬레이션 · 값 바꾸기", c.sim, c.simContainer, modifier, trailingIcon = ChagilIcon.ARROW)
+    else if (simulation) StatusChip("시뮬레이션", c.sim, c.simContainer, modifier)
+    else StatusChip("차 신호", c.primary, c.primaryContainer, modifier, pulsingDot = true)
 }
 
 @Preview(widthDp = 1100, heightDp = 300, showBackground = true, backgroundColor = 0xFF0B0F14)

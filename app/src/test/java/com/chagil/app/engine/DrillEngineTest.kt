@@ -80,7 +80,7 @@ class DrillEngineTest {
         assertEquals("반대쪽으로 한 칸 옮겨 보세요.", hint.voice)
         assertEquals(HintKind.WRONG_VALUE, hint.kind)
         assertEquals("MIST", rig.running.lastRead)
-        assertEquals("00:04.0 · Wiper 스위치 OFF → MIST · 오조작: \"지금은 한 번 닦기예요. 반대쪽으로 한 칸\"", rig.lines.last())
+        assertEquals("00:04.0 · Wiper 스위치 OFF → MIST · 다른 칸: \"지금은 한 번 닦기예요. 반대쪽으로 한 칸\"", rig.lines.last())
 
         rig.set(Signal.WIPER_SWITCH, "INTERMITTENT_LEVEL_1")
         assertNull(rig.running.hint)
@@ -141,6 +141,73 @@ class DrillEngineTest {
     }
 
     @Test
+    fun `a readable value that never changes offers self check after 8 s`() = runTest {
+        val rig = Rig(this)
+        rig.set(Signal.LOW_BEAM_SWITCH, "OFF")
+        rig.engine.start(quest)
+        rig.advance(7_000)
+        assertEquals(StepStatus.WAITING, rig.running.stepStatus)
+        assertFalse(rig.engine.selfCheck())
+
+        rig.advance(1_100)
+        assertEquals(StepStatus.SELF_CHECK_NEEDED, rig.running.stepStatus)
+        assertTrue(rig.running.selfCheckForNoChange)
+        assertTrue(rig.lines.last().endsWith("LowBeam 스위치 OFF · 값이 바뀌지 않음 · 운전자 확인"))
+        assertTrue(rig.engine.selfCheck())
+        assertEquals(1, rig.running.stepIndex)
+        assertTrue(rig.lines.last().endsWith("LowBeam 스위치 값이 바뀌지 않음 · 운전자 확인 · 통과"))
+    }
+
+    @Test
+    fun `no-change self check is opt-in, a wiper step without it keeps waiting`() = runTest {
+        val rig = Rig(this)
+        rig.set(Signal.WIPER_SWITCH, "OFF")
+        rig.car.setUnreadable(Signal.LOW_BEAM_SWITCH)
+        rig.engine.start(quest)
+        assertFalse("unreadable self check is not the no-change kind", rig.running.selfCheckForNoChange)
+        rig.engine.selfCheck() // step 2: wiper1 has ifUnreadable/ifNoChange unset in the test quest
+        assertEquals(1, rig.running.stepIndex)
+        rig.advance(20_000)
+        assertEquals(StepStatus.WAITING, rig.running.stepStatus)
+        assertFalse(rig.engine.selfCheck())
+    }
+
+    @Test
+    fun `car wash wiper step still reading AUTO never offers self check`() = runTest {
+        val carwash = QuestRepository.parse(
+            """
+            {"id": "carwash_drill", "title": "세차장", "level": "L2", "limitSec": 60, "availability": "open",
+             "steps": [{"id": "wiper_off", "label": "와이퍼 끄기", "instruction": "와이퍼를 끄세요",
+               "control": "WIPER_STALK", "read": "Wiper.switch", "to": "OFF", "stableMs": 1000,
+               "alreadyOn": "pass", "ifUnreadable": "selfCheck"}]}
+            """.trimIndent(),
+        )
+        assertFalse(carwash.steps.single().selfCheckIfNoChange)
+        val rig = Rig(this)
+        rig.set(Signal.WIPER_SWITCH, "AUTO")
+        rig.engine.start(carwash)
+        repeat(5) {
+            rig.advance(11_000) // 55 s total, still inside the 60 s limit
+            assertEquals(StepStatus.WAITING, rig.running.stepStatus)
+            assertFalse(rig.running.selfCheckForNoChange)
+        }
+        assertFalse(rig.engine.selfCheck())
+    }
+
+    @Test
+    fun `a value that changed does not offer self check`() = runTest {
+        val rig = Rig(this)
+        rig.set(Signal.LOW_BEAM_SWITCH, "OFF")
+        rig.engine.start(quest)
+        rig.set(Signal.LOW_BEAM_SWITCH, "AUTOMATIC")
+        rig.advance(9_000)
+        assertEquals(StepStatus.WAITING, rig.running.stepStatus)
+        rig.set(Signal.LOW_BEAM_SWITCH, "ON")
+        rig.advance(1_000)
+        assertEquals(1, rig.running.stepIndex)
+    }
+
+    @Test
     fun `self checked controls are not lit on the car map`() = runTest {
         val records = FakeRecords()
         val rig = Rig(this, records)
@@ -175,7 +242,7 @@ class DrillEngineTest {
             listOf(
                 "00:00.0 · 폭우 드릴 시작",
                 "00:02.1 · LowBeam 스위치 AUTOMATIC → ON · 1초 안정 · 통과",
-                "00:04.0 · Wiper 스위치 OFF → MIST · 오조작: \"지금은 한 번 닦기예요. 반대쪽으로 한 칸\"",
+                "00:04.0 · Wiper 스위치 OFF → MIST · 다른 칸: \"지금은 한 번 닦기예요. 반대쪽으로 한 칸\"",
                 "00:05.6 · Wiper 스위치 MIST → INTERMITTENT_LEVEL_1 · 1초 안정 · 통과",
                 "00:08.9 · HVAC 앞유리 디프로스터 OFF → ON · 1초 안정 · 통과",
                 "00:11.2 · Wiper 스위치 → OFF · 되돌리기 · 통과",
@@ -259,9 +326,23 @@ class DrillEngineTest {
     }
 
     @Test
-    fun `starting an L1 quest in neutral without confirmation starts paused until the driver confirms`() = runTest {
+    fun `starting an L1 quest in neutral stays paused even after a confirmation tap`() = runTest {
         val rig = Rig(this)
         rig.set(Signal.GEAR, "GEAR_NEUTRAL")
+        rig.engine.start(quest)
+        assertEquals(PauseReason.SAFETY, (rig.state as DrillState.Paused).reason)
+        rig.safety.confirmParkedByDriver()
+        rig.test.testScheduler.runCurrent()
+        assertFalse(rig.engine.resumable.value)
+        assertFalse(rig.engine.resume())
+        rig.set(Signal.GEAR, "GEAR_PARK")
+        assertTrue(rig.engine.resume())
+    }
+
+    @Test
+    fun `starting an L1 quest with an unknown gear starts paused until the driver confirms`() = runTest {
+        val rig = Rig(this)
+        rig.set(Signal.GEAR, "GEAR_UNKNOWN")
         rig.engine.start(quest)
         assertEquals(PauseReason.SAFETY, (rig.state as DrillState.Paused).reason)
         assertFalse(rig.engine.resume())

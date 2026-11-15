@@ -102,9 +102,25 @@ class SafetyMonitorTest {
     @Test
     fun `clearDriverConfirmation resets it`() = runTest {
         val rig = Rig(this)
-        rig.gear("GEAR_NEUTRAL")
+        rig.gear("GEAR_UNKNOWN")
         rig.monitor.confirmParkedByDriver()
         rig.monitor.clearDriverConfirmation()
         assertFalse(rig.monitor.allows(QuestLevel.L1))
+    }
+
+    @Test
+    fun `car reading N clears an earlier confirmation and blocks a new one`() = runTest {
+        val rig = Rig(this)
+        rig.gear("GEAR_UNKNOWN")
+        rig.monitor.confirmParkedByDriver()
+        assertTrue(rig.monitor.allows(QuestLevel.L1))
+
+        rig.gear("GEAR_NEUTRAL")
+        assertEquals(SafetyLevel.L1_STOPPED_UNCONFIRMED, rig.level)
+        assertFalse(rig.monitor.driverConfirmed.value)
+        assertFalse(rig.monitor.allows(QuestLevel.L1))
+
+        rig.monitor.confirmParkedByDriver()
+        assertFalse("N must be moved to P, not confirmed", rig.monitor.allows(QuestLevel.L1))
     }
 }

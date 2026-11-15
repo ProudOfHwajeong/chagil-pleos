@@ -6,9 +6,10 @@
 차를 세워 두고 진짜 레버와 버튼을 움직이면, 차(Vehicle SDK 값)가 직접 정답을 판정하는 차 기능 실습 앱. 1차 제출 범위: **폭우 드릴**이 Pleos Connect 에뮬레이터 + Virtual Console에서 실제로 판정되고, 세차 대비·성에 낀 아침 드릴은 같은 엔진에 데이터로 붙는다. 출발 준비(벨트) 드릴은 "준비 중" 카드로만 보인다.
 
 ## 1. 대상 환경
-- Pleos Connect v2.1.0 에뮬레이터 (Android Automotive OS, API 34, arm64), 화면 2560×1440 가로. 밀도는 실제 에뮬레이터에서 `adb shell wm density`로 확인 예정 → 레이아웃은 dp 폭 1280~1920 어디서든 깨지지 않게 반응형으로 만든다.
+- Pleos Connect v2.1.0 에뮬레이터 (Android Automotive OS, API 34, arm64, Vehicle Service 2.3.22). 실측: 화면 2560x1440 가로, density 160(mdpi). 즉 화면이 2560x1440dp로 매우 넓다. 레이아웃 기준 캔버스는 2560x1440dp이고, 1280x720dp에서도 깨지지 않게 반응형으로 만든다. 글자와 버튼이 작아 보이지 않게 이 큰 캔버스 기준으로 크기를 정한다.
+- 미리보기 AVD `chagil_preview`(emulator-5580)도 `wm density 160`으로 맞춰 두었다. 사용자의 Pleos 에뮬레이터는 emulator-5554이며 에이전트는 건드리지 않는다.
 - Vehicle SDK `ai.pleos.playground:Vehicle:2.3.2` (Maven 의존성. AAR을 저장소에 커밋하지 않는다 — SDK 라이선스 3.4 재배포 금지).
-- 미리보기용 일반 에뮬레이터 `chagil_preview` (2560×1440, density 240, **serial `emulator-5580` 고정**). Vehicle Service가 없으므로 앱은 자동으로 시뮬레이션 모드로 떨어져야 한다. **다른 adb 기기(사용자의 Pleos 에뮬레이터)에는 절대 접근하지 않는다. 모든 adb 명령은 `adb -s emulator-5580`.**
+- 미리보기용 일반 에뮬레이터 `chagil_preview` (2560x1440, density 160으로 덮어씀, serial `emulator-5580` 고정). Vehicle Service가 없으므로 앱은 자동으로 시뮬레이션 모드로 떨어져야 한다. **다른 adb 기기(사용자의 Pleos 에뮬레이터)에는 절대 접근하지 않는다. 모든 adb 명령은 `adb -s emulator-5580`.**
 - 빌드: `export JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home"; ./gradlew assembleDebug testDebugUnitTest`
 
 ## 2. 실제 SDK API (2.3.2 AAR에서 javap로 확인함)

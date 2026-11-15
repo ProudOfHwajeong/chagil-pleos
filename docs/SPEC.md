@@ -107,7 +107,7 @@ class DrillEngine(hub, safety, clock) { val state: StateFlow<DrillState>; val lo
 ## 5. 퀘스트 JSON 스키마 (`app/src/main/assets/quests/<id>.json`)
 
 ```json
-{ "id": "rain_drill", "title": "폭우 드릴", "subtitle": "…", "level": "L1", "limitSec": 45,
+{ "id": "rain_drill", "title": "폭우 드릴", "subtitle": "…", "level": "L1", "limitSec": 60,
   "zone": "windshield", "availability": "open | coming_soon", "label": null,
   "intro": {"text": "…", "voice": "…"},
   "steps": [

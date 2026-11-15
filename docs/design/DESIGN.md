@@ -92,7 +92,7 @@
 | `StepList` / `StepRow` | `StepItem(label, StepState)` DONE ✓ / ACTIVE ● / PENDING ○ / ATTENTION ! | 80dp 행, 완료 구간 연결선은 초록 |
 | `CountdownRing` / `CountdownBar` | remainingSec, totalSec, paused | 10초 이하에서 호박색(빨강 아님), 멈춤 표시 |
 | `SafetyChip` | `SafetyChipLevel` L0/L1/L2, confirmedByDriver | 문구: "주행 중 · 쉬어요" / "정지 · P 확인 필요" / "정지 · P 확인함" / "주차 확인 · P" |
-| `SourceChip` | simulation | "실차 신호"(파랑, 깜빡이는 점) / "시뮬레이션"(보라) |
+| `SourceChip` | simulation | "차 신호"(파랑, 깜빡이는 점) / "시뮬레이션"(보라) |
 | `StatusChip` | text, color, container, icon? | 칩 공통 |
 | `PrimaryButton` / `SecondaryButton` | text, onClick, icon?, enabled | 88dp, 알약형. 화면당 큰 버튼은 2개까지 |
 | `TopBarButton` | text, onClick, icon? | 76dp. 상단의 일시정지, 그만하기, 닫기 버튼 |

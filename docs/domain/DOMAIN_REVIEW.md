@@ -93,7 +93,7 @@
 
 | 파일 | 열림 | 단계(순서대로) | 제한 | 비고 |
 |---|---|---|---|---|
-| `rain_drill.json` | open, L1 | 전조등 ON, 와이퍼 LO 또는 HI, 앞유리 디프로스터 ON, 와이퍼 OFF(restore) | 45초 | 오조작 힌트: 라이트 AUTO, 주간등, OFF. 와이퍼 MIST, AUTO, 간헐 2~5단, 연속 4~5단 |
+| `rain_drill.json` | open, L1 | 전조등 ON, 와이퍼 LO 또는 HI, 앞유리 디프로스터 ON, 와이퍼 OFF(restore) | 60초 | 오조작 힌트: 라이트 AUTO, 주간등, OFF. 와이퍼 MIST, AUTO, 간헐 2~5단, 연속 4~5단 |
 | `carwash_drill.json` | open, L1 | 와이퍼 OFF (`alreadyOn: pass`) | 30초 | 시작할 때 이미 OFF면 1초 뒤 통과하고 로그에 이미 켜져 있음을 남긴다 |
 | `frost_drill.json` | open, L1 | 앞유리 디프로스터, 뒷유리 열선, 핸들 열선(`notAnyOf ["0"]`) | 60초 | guard: 와이퍼가 OFF가 아니면 경고 |
 | `departure_drill.json` | coming_soon, L1 | 운전석 벨트, 조수석 벨트, 뒷좌석과 카시트 | 60초 | 시작하지 않고 카드만 보인다 |
@@ -150,7 +150,7 @@ chore/compliance (DEMO_SCRIPT)
 
 녹화 전 콘솔 초기값: Gear P, Wipers Off, Defroster Off, Steering Wheel Heat 0(Off), Exterior Lights Mode Auto 또는 Off(둘 다 `OFF`로 읽힌다).
 
-### 폭우 드릴 (45초)
+### 폭우 드릴 (60초)
 
 | 번호 | 단계 | SDK 호출 (읽기만) | 콘솔 조작 | 기대 판정 |
 |---|---|---|---|---|

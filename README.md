@@ -6,13 +6,15 @@
 
 ## 스크린샷
 
-| 홈 | 폭우 드릴 진행 |
-|---|---|
-| ![홈 화면. 드릴 카드와 내 차 도면](docs/screenshots/01-home-day.png) | ![폭우 드릴 진행 화면. 지시, 위치 그림, 남은 시간](docs/screenshots/04-drill-running.png) |
-| 잘못 조작했을 때 | 완료 |
-| ![잘못 조작했을 때 안내](docs/screenshots/05-wrong-op-hint.png) | ![완료 화면. 통과 시간과 방금 쓴 조작부](docs/screenshots/07-completed.png) |
+아래 화면은 모두 Pleos Connect v2.1.0 에뮬레이터에서 release APK를 실행하고, Virtual Console로 실제 차량 값을 바꿔 가며 찍었습니다. 앱은 오른쪽 창에 뜹니다.
 
-밤 테마, 주행 중 정지, 시간 초과, 내 차 도면, 시뮬레이터 패널 화면은 [docs/screenshots](docs/screenshots/) 폴더에 있습니다.
+| 홈 (기어 P를 읽어 주차 확인) | 폭우 드릴 진행 |
+|---|---|
+| ![홈 화면. 드릴 카드와 내 차 도면](docs/screenshots/pleos-01-home.png) | ![폭우 드릴 진행 화면. 지시, 위치 그림, 남은 시간](docs/screenshots/pleos-02-drill.png) |
+| 와이퍼를 AUTO로 잘못 두었을 때 | 완료 |
+| ![차가 읽은 값 AUTO와 안내](docs/screenshots/pleos-03-wrong-auto.png) | ![완료 화면. 통과 시간과 방금 쓴 조작부](docs/screenshots/pleos-04-done.png) |
+
+기어를 D로 바꾸면 Pleos가 앱 화면을 가립니다([캡처](docs/screenshots/pleos-05-driving-blocked.png)). 밤 테마, 시간 초과, 내 차 도면, 시뮬레이터 패널 화면은 [docs/screenshots](docs/screenshots/) 폴더에 있으며, 이 화면들은 일반 Android Automotive 에뮬레이터에서 시뮬레이션 모드로 찍었습니다.
 
 ## 주요 기능
 

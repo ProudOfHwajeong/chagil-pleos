@@ -44,7 +44,7 @@ Row 카드 4장 (height 330dp, 간격 24, 각 weight 1)
 
 | 퀘스트 | title | subtitle | meta | glyph | state |
 |---|---|---|---|---|---|
-| rain_drill | 폭우 드릴 | 전조등, 와이퍼, 앞유리 김서림 | 45초 · 4단계 | RAIN | 열림 |
+| rain_drill | 폭우 드릴 | 전조등, 와이퍼, 앞유리 김서림 | 60초 · 4단계 | RAIN | 열림 |
 | (세차) | 세차 대비 | 세차 전에 와이퍼 AUTO 끄기 | `{limitSec}초 · {n}단계` | CAR_WASH | 열림 |
 | (성에) | 성에 낀 아침 | 앞유리, 뒷유리 열선, 핸들 열선 | `{limitSec}초 · {n}단계` | FROST | 열림 |
 | (벨트) | 출발 준비 | 탄 사람 모두 벨트 확인 | 곧 열려요 | BELT | COMING_SOON |
@@ -201,14 +201,14 @@ Row(간격 32)
   1. `SimBanner`: 시뮬레이션일 때 항상 맨 위에 둔다.
   2. `LogPanel(lines, simulation)`: 시간은 00:02.1 형식(mono). 점 색은 PASS 초록, HINT 호박, INFO 회색, DONE 파랑. 본문은 엔진 LogEntry.text를 그대로 쓴다. 최신 줄이 아래에 오고 자동으로 스크롤한다.
   3. SIMULATION일 때만 구분선 24dp 뒤에 시뮬레이터(title)와 `SimSwitchRow`를 줄마다 둔다.
-     - 전조등 스위치: OFF, ON, AUTOMATIC, DAYTIME_RUNNING. 표시는 끔, 켬, AUTO, 주간등
+     - 전조등 스위치: OFF, ON, AUTOMATIC, DAYTIME_RUNNING. 표시는 끔, 켬, AUTO, 미등
      - 와이퍼 스위치: OFF, AUTO, CONTINUOUS_LEVEL_1, CONTINUOUS_LEVEL_3. 표시는 끔, AUTO, LO, HI. Pleos 콘솔의 Low, High와 같은 값을 보낸다.
      - 앞유리 김서림: OFF, ON. 표시는 끔, 켬
      - 뒷유리 열선: OFF, ON
      - 핸들 열선: 0, 1, 2. 표시는 끔, 1단, 2단
      - 기어: GEAR_PARK, GEAR_NEUTRAL, GEAR_DRIVE, GEAR_REVERSE. 표시는 P, N, D, R
      - 읽기 불가 만들기(신호별 Unreadable 토글): 선택지는 정상, 읽기 불가
-- 실차 신호(PLEOS_SDK) 모드에서는 시뮬레이터 부분을 모두 숨긴다. LogPanel은 그대로 두고 SourceChip은 실차 신호로 보인다.
+- 실차 신호(PLEOS_SDK) 모드에서는 시뮬레이터 부분을 모두 숨긴다. LogPanel은 그대로 두고 SourceChip은 차 신호로 보인다.
 - Compact: 패널 폭 560dp. SimSwitchRow는 FlowRow라 자동으로 줄을 바꾼다.
 
 ## 부록 A. 문구 모음 (그대로 사용)
@@ -216,7 +216,7 @@ Row(간격 32)
 | 키 | 문구 |
 |---|---|
 | sim.banner | 시뮬레이션 중이에요. 실제 차 신호가 아니에요 |
-| source.real / source.sim | 실차 신호 / 시뮬레이션 |
+| source.real / source.sim | 차 신호 / 시뮬레이션 |
 | safety.l0 / l1 / l1.confirmed / l2 | 주행 중 · 쉬어요 / 정지 · P 확인 필요 / 정지 · P 확인함 / 주차 확인 · P |
 | home.tagline | 차를 세워 두고, 진짜 레버로 연습해요 |
 | card.locked / card.soon | P에 두면 열려요 / 준비 중 |

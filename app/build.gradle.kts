@@ -65,6 +65,8 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.kotlinx.serialization.json)
+    implementation(libs.kotlinx.coroutines.android)
     debugImplementation(libs.androidx.ui.tooling)
     testImplementation(libs.junit)
+    testImplementation(libs.kotlinx.coroutines.test)
 }

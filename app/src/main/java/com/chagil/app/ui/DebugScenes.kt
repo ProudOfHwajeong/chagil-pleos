@@ -18,7 +18,7 @@ import kotlinx.coroutines.withTimeoutOrNull
  */
 object DebugScenes {
     val names = listOf(
-        "home", "confirm", "neutral", "drill", "hint", "selfcheck", "pause", "resume", "rest",
+        "home", "confirm", "neutral", "drill", "hint", "selfcheck", "nochange", "pause", "resume", "rest",
         "timeout", "completed", "map", "sim",
     )
 
@@ -63,6 +63,7 @@ object DebugScenes {
             "drill" -> drillAtStep2()
             "hint" -> { drillAtStep2(); sim.set(Signal.WIPER_SWITCH, "AUTO") }
             "selfcheck" -> { sim.setUnreadable(Signal.LOW_BEAM_SWITCH); vm.startDrill(rain) }
+            "nochange" -> vm.startDrill(rain) // lowbeam stays OFF: after 8 s the "값이 아직 그대로예요" check
             "pause" -> { drillAtStep2(); c.engine.pause() }
             "rest" -> { drillAtStep2(); sim.set(Signal.GEAR, Raw.GEAR_DRIVE) }
             "resume" -> { drillAtStep2(); sim.set(Signal.GEAR, Raw.GEAR_DRIVE); delay(1_000); sim.set(Signal.GEAR, Raw.GEAR_PARK) }

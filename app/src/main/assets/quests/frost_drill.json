@@ -23,6 +23,7 @@
       "stableMs": 1000,
       "alreadyOn": "pass",
       "ifUnreadable": "selfCheck",
+      "ifNoChange": "selfCheck",
       "where": {
         "text": "공조 패널, 앞유리 그림 버튼",
         "voice": "공조 패널, 앞유리 그림이 있는 버튼이에요. 물결 화살표가 위로 올라가요."
@@ -39,6 +40,7 @@
       "stableMs": 1000,
       "alreadyOn": "pass",
       "ifUnreadable": "selfCheck",
+      "ifNoChange": "selfCheck",
       "where": {
         "text": "공조 패널, 네모난 뒷유리 버튼",
         "voice": "공조 패널, 네모 안에 물결 화살표가 있는 버튼이에요."
@@ -55,6 +57,7 @@
       "stableMs": 1000,
       "alreadyOn": "pass",
       "ifUnreadable": "selfCheck",
+      "ifNoChange": "selfCheck",
       "where": {
         "text": "핸들 그림에 물결 있는 버튼",
         "voice": "핸들 그림 위로 물결이 올라가는 버튼이에요. 차마다 자리가 달라요. 핸들이나 공조 패널 근처를 봐 주세요."

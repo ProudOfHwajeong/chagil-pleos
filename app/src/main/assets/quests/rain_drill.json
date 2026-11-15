@@ -23,6 +23,7 @@
       "stableMs": 1000,
       "alreadyOn": "pass",
       "ifUnreadable": "selfCheck",
+      "ifNoChange": "selfCheck",
       "wrong": {
         "AUTOMATIC": {
           "text": "AUTO 말고 전조등이에요",
@@ -46,7 +47,7 @@
       "id": "wiper_lo",
       "label": "와이퍼 켜기",
       "instruction": "와이퍼를 LO나 HI에 두세요",
-      "voice": "와이퍼 레버를 LO 칸에 두세요. 비가 세면 HI까지 올려요.",
+      "voice": "와이퍼 레버를 LO나 HI에 두세요. 비가 세면 HI예요.",
       "control": "WIPER_STALK",
       "read": "Wiper.switch",
       "toAnyOf": ["INTERMITTENT_LEVEL_1", "CONTINUOUS_LEVEL_1", "CONTINUOUS_LEVEL_2"],
@@ -56,11 +57,11 @@
       "wrong": {
         "MIST": {
           "text": "지금은 '한 번 닦기'예요",
-          "voice": "MIST는 한 번만 닦아요. LO 칸에 두세요."
+          "voice": "MIST는 한 번만 닦아요. LO나 HI에 두세요."
         },
         "AUTO": {
           "text": "AUTO는 센서에 맡겨요",
-          "voice": "AUTO도 닦지만, 오늘은 직접 LO에 맞춰 봐요."
+          "voice": "AUTO도 닦지만, 오늘은 직접 LO나 HI에 맞춰 봐요."
         },
         "CONTINUOUS_LEVEL_3": {
           "text": "아주 빠른 칸이에요",
@@ -92,8 +93,8 @@
         }
       },
       "where": {
-        "text": "와이퍼 레버, LO 글자 칸",
-        "voice": "핸들 옆 와이퍼 레버예요. 레버에 적힌 LO 칸에 맞추면 돼요."
+        "text": "와이퍼 레버, LO나 HI 칸",
+        "voice": "핸들 옆 와이퍼 레버예요. 레버에 적힌 LO나 HI 칸에 맞추면 돼요."
       }
     },
     {
@@ -107,6 +108,7 @@
       "stableMs": 1000,
       "alreadyOn": "pass",
       "ifUnreadable": "selfCheck",
+      "ifNoChange": "selfCheck",
       "where": {
         "text": "공조 패널, 앞유리 그림 버튼",
         "voice": "공조 패널, 앞유리 그림이 있는 버튼이에요. 물결 화살표가 위로 올라가요."

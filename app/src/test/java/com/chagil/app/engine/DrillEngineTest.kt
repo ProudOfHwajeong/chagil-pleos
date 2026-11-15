@@ -151,10 +151,47 @@ class DrillEngineTest {
 
         rig.advance(1_100)
         assertEquals(StepStatus.SELF_CHECK_NEEDED, rig.running.stepStatus)
+        assertTrue(rig.running.selfCheckForNoChange)
         assertTrue(rig.lines.last().endsWith("LowBeam 스위치 OFF · 값이 바뀌지 않음 · 운전자 확인"))
         assertTrue(rig.engine.selfCheck())
         assertEquals(1, rig.running.stepIndex)
         assertTrue(rig.lines.last().endsWith("LowBeam 스위치 값이 바뀌지 않음 · 운전자 확인 · 통과"))
+    }
+
+    @Test
+    fun `no-change self check is opt-in, a wiper step without it keeps waiting`() = runTest {
+        val rig = Rig(this)
+        rig.set(Signal.WIPER_SWITCH, "OFF")
+        rig.car.setUnreadable(Signal.LOW_BEAM_SWITCH)
+        rig.engine.start(quest)
+        assertFalse("unreadable self check is not the no-change kind", rig.running.selfCheckForNoChange)
+        rig.engine.selfCheck() // step 2: wiper1 has ifUnreadable/ifNoChange unset in the test quest
+        assertEquals(1, rig.running.stepIndex)
+        rig.advance(20_000)
+        assertEquals(StepStatus.WAITING, rig.running.stepStatus)
+        assertFalse(rig.engine.selfCheck())
+    }
+
+    @Test
+    fun `car wash wiper step still reading AUTO never offers self check`() = runTest {
+        val carwash = QuestRepository.parse(
+            """
+            {"id": "carwash_drill", "title": "세차장", "level": "L2", "limitSec": 60, "availability": "open",
+             "steps": [{"id": "wiper_off", "label": "와이퍼 끄기", "instruction": "와이퍼를 끄세요",
+               "control": "WIPER_STALK", "read": "Wiper.switch", "to": "OFF", "stableMs": 1000,
+               "alreadyOn": "pass", "ifUnreadable": "selfCheck"}]}
+            """.trimIndent(),
+        )
+        assertFalse(carwash.steps.single().selfCheckIfNoChange)
+        val rig = Rig(this)
+        rig.set(Signal.WIPER_SWITCH, "AUTO")
+        rig.engine.start(carwash)
+        repeat(5) {
+            rig.advance(11_000) // 55 s total, still inside the 60 s limit
+            assertEquals(StepStatus.WAITING, rig.running.stepStatus)
+            assertFalse(rig.running.selfCheckForNoChange)
+        }
+        assertFalse(rig.engine.selfCheck())
     }
 
     @Test

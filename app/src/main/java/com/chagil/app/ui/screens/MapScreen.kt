@@ -66,7 +66,7 @@ fun MapScreen(simulation: Boolean, litControls: Set<String>, onClose: () -> Unit
                 Modifier.width(if (LocalWidthClass.current == WidthClass.COMPACT) 400.dp else 460.dp).fillMaxHeight()
                     .clip(ChagilShapes.large).background(c.surface).padding(ChagilSpacing.xl),
             ) {
-                Text("$lit / ${CountedCells.size}칸", style = t.headline, color = c.text)
+                Text("$lit / ${CountedCells.size}개 기능", style = t.headline, color = c.text)
                 Text("확인할 수 있는 기능 기준", style = t.body, color = c.textSecondary)
                 Spacer(Modifier.height(ChagilSpacing.l))
                 Rows.forEach { row ->

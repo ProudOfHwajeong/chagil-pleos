@@ -58,6 +58,8 @@ sealed interface DrillState {
         val hint: Hint?,
         val elapsedMs: Long = 0,
         val stepCount: Int = 0,
+        /** SELF_CHECK_NEEDED because the value is readable but never changed (`ifNoChange`), not because it is unreadable. */
+        val selfCheckForNoChange: Boolean = false,
     ) : DrillState
 
     data class Paused(val reason: PauseReason, val snapshot: Running) : DrillState

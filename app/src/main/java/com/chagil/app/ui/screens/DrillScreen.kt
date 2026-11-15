@@ -154,7 +154,7 @@ private fun RunningView(ui: DrillUi, r: DrillState.Running, a: DrillActions, pau
         topBar = {
             DrillTopBar(q.title, progress = "${r.stepIndex + 1}/${q.steps.size}단계") {
                 TappableSourceChip(ui.simulation, a.onSource)
-                if (!selfCheck && !paused) TopBarButton("일시정지", a.onPause, icon = ChagilIcon.PAUSE)
+                if (!paused) TopBarButton("일시정지", a.onPause, icon = ChagilIcon.PAUSE)
                 TopBarButton("그만하기", a.onQuit, icon = ChagilIcon.CLOSE)
             }
         },
@@ -175,7 +175,11 @@ private fun RunningView(ui: DrillUi, r: DrillState.Running, a: DrillActions, pau
                     }
                     selfCheck -> InstructionPanel(
                         headline = step.instruction,
-                        eyebrow = "이 버튼은 앱이 확인할 수 없어요. 직접 하고 눌러 주세요",
+                        eyebrow = if (r.selfCheckForNoChange) {
+                            "값이 아직 그대로예요. 했다면 눌러 주세요"
+                        } else {
+                            "이 버튼은 앱이 확인할 수 없어요. 직접 하고 눌러 주세요"
+                        },
                         voice = step.voice,
                         checking = false,
                     )
@@ -205,15 +209,19 @@ private fun RunningView(ui: DrillUi, r: DrillState.Running, a: DrillActions, pau
                 Spacer(Modifier.height(ChagilSpacing.s))
                 StepList(q.steps.mapIndexed { i, s -> StepItem(s.label, if (i < r.stepIndex) StepState.DONE else if (i == r.stepIndex) StepState.ACTIVE else StepState.PENDING) })
                 val sec = ((r.remainingMs + 999) / 1000).toInt()
-                if (compact && !selfCheck) {
+                if (compact) {
                     Spacer(Modifier.height(ChagilSpacing.l))
                     CountdownBar(sec, q.limitSec)
                 }
                 Spacer(Modifier.weight(1f))
-                if (selfCheck) {
-                    PrimaryButton(if (step.isRestore) "했어요" else "켰어요", a.onSelfCheck, Modifier.fillMaxWidth(), icon = ChagilIcon.CHECK)
-                } else if (!compact) {
+                if (!compact) {
                     CountdownRing(sec, q.limitSec, Modifier.align(Alignment.CenterHorizontally), paused = paused)
+                }
+                if (selfCheck) {
+                    // The timer keeps running and the car value can still pass the step, so the ring stays visible.
+                    if (!compact) Spacer(Modifier.height(ChagilSpacing.l))
+                    val turnsOff = step.isRestore || step.to.equals("OFF", ignoreCase = true)
+                    PrimaryButton(if (turnsOff) "했어요" else "켰어요", a.onSelfCheck, Modifier.fillMaxWidth(), icon = ChagilIcon.CHECK)
                 }
             }
         }

@@ -26,8 +26,8 @@ import kotlinx.coroutines.launch
  * - Already satisfied at step start → passes after `stableMs` (log "이미 켜져 있음"), unless `alreadyOn` says otherwise.
  * - Reading changes to a key in `wrong` → hint immediately + log "다른 칸".
  * - Unreadable signal with `ifUnreadable: "selfCheck"` → [StepStatus.SELF_CHECK_NEEDED]; [selfCheck] passes it.
- *   The same happens when a readable value has not changed at all for [NO_CHANGE_SELF_CHECK_MS] (the control
- *   may drive another property, e.g. a console card that does not map to the read signal). The car value
+ *   With `ifNoChange: "selfCheck"` (opt-in, only for controls whose mapping is not verified, never Wiper.switch)
+ *   the same happens when a readable value has not changed at all for [NO_CHANGE_SELF_CHECK_MS]. The car value
  *   stays the primary pass: if it later matches, the step passes normally.
  * - Guards: hint while violated, never fail.
  * - `limitSec` runs out → [DrillState.TimedOut]. Paused time does not count.
@@ -197,6 +197,7 @@ class DrillEngine(
         s.prevValue = null
         s.changed = false
         s.noChangeLogged = false
+        s.selfCheckForNoChange = false
         s.stableSince = null
         s.hint = null
         s.status = StepStatus.WAITING
@@ -235,13 +236,14 @@ class DrillEngine(
                     }
                 } else {
                     s.stableSince = null
-                    val noChange = step.selfCheckIfUnreadable && !s.changed &&
+                    val noChange = step.selfCheckIfNoChange && !s.changed &&
                         elapsed(s) - s.stepEnteredAt >= NO_CHANGE_SELF_CHECK_MS
                     if (noChange && !s.noChangeLogged) {
                         s.noChangeLogged = true
                         addLog(s, "${step.signal?.label ?: step.read} $raw · 값이 바뀌지 않음 · 운전자 확인")
                     }
                     s.status = if (noChange) StepStatus.SELF_CHECK_NEEDED else StepStatus.WAITING
+                    s.selfCheckForNoChange = noChange
                 }
             }
             Reading.Unreadable, Reading.Unknown -> {
@@ -249,6 +251,7 @@ class DrillEngine(
                 val unreadable = reading == Reading.Unreadable ||
                     elapsed(s) - s.stepEnteredAt >= UNKNOWN_AS_UNREADABLE_MS
                 s.status = if (step.selfCheckIfUnreadable && unreadable) StepStatus.SELF_CHECK_NEEDED else StepStatus.WAITING
+                s.selfCheckForNoChange = false
             }
         }
         _state.value = running(s)
@@ -342,6 +345,7 @@ class DrillEngine(
         hint = s.guardHint ?: s.hint,
         elapsedMs = elapsed(s),
         stepCount = s.quest.steps.size,
+        selfCheckForNoChange = s.status == StepStatus.SELF_CHECK_NEEDED && s.selfCheckForNoChange,
     )
 
     private fun elapsed(s: Session): Long = s.accumulatedMs + (s.runningSince?.let { clock() - it } ?: 0L)
@@ -359,6 +363,7 @@ class DrillEngine(
         var prevValue: String? = null
         var changed = false
         var noChangeLogged = false
+        var selfCheckForNoChange = false
         var stableSince: Long? = null
         var status = StepStatus.WAITING
         var hint: Hint? = null
@@ -372,7 +377,7 @@ class DrillEngine(
         /** A selfCheck step whose value never arrives is treated as unreadable after this long. */
         const val UNKNOWN_AS_UNREADABLE_MS = 3_000L
 
-        /** A selfCheck step whose readable value never changes offers "켰어요" after this long. */
+        /** An `ifNoChange: "selfCheck"` step whose readable value never changes offers "켰어요" after this long. */
         const val NO_CHANGE_SELF_CHECK_MS = 8_000L
         private const val MAX_LOG = 200
     }

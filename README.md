@@ -110,7 +110,6 @@ keyPassword=...
 ## APK 파일 위치
 
 - 저장소 안: [apk/컬러팡_홍보팀_차길들이기_release.apk](apk/컬러팡_홍보팀_차길들이기_release.apk) (release 서명, 약 22MB)
-- 백업: [GitHub Release v0.1.0](../../releases/tag/v0.1.0)
 
 ## 프로젝트 구조
 

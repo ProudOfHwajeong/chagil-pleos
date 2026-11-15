@@ -85,12 +85,12 @@ class SimulatedVehicleSource(
 
         /**
          * Values the simulator panel offers per signal. Wiper options mirror the Pleos Virtual Console card
-         * (Off / Auto / Low / High) plus MIST so the "wrong value" hint can be demonstrated.
+         * (Off / Auto / Low / High) only, so every simulated screen can be reproduced on Pleos.
          */
         fun optionsFor(signal: Signal): List<String> = when (signal) {
             Signal.GEAR -> listOf(Raw.GEAR_PARK, Raw.GEAR_REVERSE, Raw.GEAR_NEUTRAL, Raw.GEAR_DRIVE)
             Signal.WIPER_SWITCH -> listOf(
-                Raw.OFF, "MIST", "INTERMITTENT_LEVEL_1", "CONTINUOUS_LEVEL_1", "CONTINUOUS_LEVEL_2", "AUTO",
+                Raw.OFF, "AUTO", "CONTINUOUS_LEVEL_1", "CONTINUOUS_LEVEL_2",
             )
             Signal.WIPER_STATE -> listOf(Raw.OFF, Raw.ON)
             Signal.LOW_BEAM_SWITCH -> listOf(Raw.OFF, Raw.ON, "DAYTIME_RUNNING", "AUTOMATIC")

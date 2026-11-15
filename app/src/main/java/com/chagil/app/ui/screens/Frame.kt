@@ -102,7 +102,8 @@ fun PageFrame(
 fun TappableSourceChip(simulation: Boolean, onClick: () -> Unit) {
     SourceChip(
         simulation,
-        Modifier
+        tappable = true,
+        modifier = Modifier
             .clip(ChagilShapes.pill)
             .clickable(role = Role.Button, onClickLabel = "판정 로그 열기", onClick = onClick)
             .padding(vertical = 10.dp),
@@ -142,7 +143,7 @@ fun LogEntry.toLine(): LogLine = LogLine(
     text = text,
     kind = when {
         text.startsWith("드릴 완료") -> LogKind.DONE
-        text.contains("오조작") || text.contains("주의") -> LogKind.HINT
+        text.contains("다른 칸") || text.contains("주의") -> LogKind.HINT
         text.contains("통과") -> LogKind.PASS
         else -> LogKind.INFO
     },
@@ -151,8 +152,14 @@ fun LogEntry.toLine(): LogLine = LogLine(
 /** Cells of "내 차 도면" (SCREENS §7). The gear is drawn but is a safety signal, not a drill cell. */
 val MapCells: List<ControlPoint> = ControlPoint.entries.filter { it != ControlPoint.GEAR_SELECTOR }
 
-/** Controls the app cannot read in round 1 → quiz cells. */
-val QuizCells: Set<ControlPoint> = setOf(ControlPoint.SEAT_BELT)
+/**
+ * Controls shown as quiz cells. Empty in round 1: the belt is "준비 중" everywhere (home card, map row),
+ * so the cockpit draws it plainly instead of a "퀴즈" callout and "?" mark.
+ */
+val QuizCells: Set<ControlPoint> = emptySet()
+
+/** Cells counted in "n / m칸": the belt is "준비 중" in round 1, so it is drawn but not counted. */
+val CountedCells: List<ControlPoint> = MapCells.filter { it != ControlPoint.SEAT_BELT }
 
 /** Cells of the zone a quest trains, for the completion caption. */
 fun zoneCells(zone: String?): Pair<String, List<ControlPoint>> = when (zone) {

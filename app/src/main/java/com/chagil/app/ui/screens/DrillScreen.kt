@@ -170,11 +170,12 @@ private fun RunningView(ui: DrillUi, r: DrillState.Running, a: DrillActions, pau
                             voice = hint.voice,
                             readValue = readValue,
                             tone = InstructionTone.HINT,
+                            simulation = ui.simulation,
                         )
                     }
                     selfCheck -> InstructionPanel(
                         headline = step.instruction,
-                        eyebrow = "이 차는 이 신호를 읽을 수 없어요",
+                        eyebrow = "이 버튼은 앱이 확인할 수 없어요. 직접 하고 눌러 주세요",
                         voice = step.voice,
                         checking = false,
                     )
@@ -183,6 +184,7 @@ private fun RunningView(ui: DrillUi, r: DrillState.Running, a: DrillActions, pau
                         voice = step.voice,
                         readValue = readValue,
                         checking = !paused,
+                        simulation = ui.simulation,
                     )
                 }
                 Spacer(Modifier.height(ChagilSpacing.l))
@@ -209,7 +211,7 @@ private fun RunningView(ui: DrillUi, r: DrillState.Running, a: DrillActions, pau
                 }
                 Spacer(Modifier.weight(1f))
                 if (selfCheck) {
-                    PrimaryButton("켰어요", a.onSelfCheck, Modifier.fillMaxWidth(), icon = ChagilIcon.CHECK)
+                    PrimaryButton(if (step.isRestore) "했어요" else "켰어요", a.onSelfCheck, Modifier.fillMaxWidth(), icon = ChagilIcon.CHECK)
                 } else if (!compact) {
                     CountdownRing(sec, q.limitSec, Modifier.align(Alignment.CenterHorizontally), paused = paused)
                 }
@@ -228,7 +230,7 @@ private fun PausedOverlay(ui: DrillUi, p: DrillState.Paused, a: DrillActions) {
         when {
             p.reason == PauseReason.USER && ui.resumable -> PauseCard(where, a.onResume, a.onQuit)
             ui.resumable -> PauseCard(
-                if (ui.safety.level == SafetyLevel.L2_PARKED) "$where 차가 다시 P에 있어요." else "$where 다시 멈춰 있어요.",
+                if (ui.safety.level == SafetyLevel.L2_PARKED) "$where\n차가 다시 P에 있어요." else "$where\n다시 멈춰 있어요.",
                 a.onResume, a.onQuit,
             )
             ui.safety.level == SafetyLevel.L1_STOPPED_UNCONFIRMED -> SafetyPromptCard(
@@ -271,7 +273,8 @@ private fun TimedOutView(ui: DrillUi, s: DrillState.TimedOut, a: DrillActions) {
         Row(Modifier.fillMaxSize(), horizontalArrangement = Arrangement.spacedBy(ChagilSpacing.xl)) {
             Column(Modifier.weight(1f).fillMaxHeight()) {
                 InstructionPanel(
-                    headline = "괜찮아요. 여기 있어요",
+                    headline = point?.let { "괜찮아요. ${it.label.withTopic()} 여기예요" } ?: "괜찮아요. 여기 있어요",
+                    eyebrow = "시간이 다 됐어요",
                     voice = step?.where?.spoken ?: point?.where,
                     tone = InstructionTone.CALM,
                 )
@@ -358,4 +361,11 @@ private fun CompletedView(ui: DrillUi, s: DrillState.Completed, a: DrillActions)
             }
         }
     }
+}
+
+/** "와이퍼 레버" → "와이퍼 레버는", "앞유리 김서림 버튼" → "앞유리 김서림 버튼은" (topic particle by final consonant). */
+internal fun String.withTopic(): String {
+    val last = trimEnd().lastOrNull() ?: return this
+    val hasBatchim = last in '가'..'힣' && (last - '가') % 28 != 0
+    return this + if (hasBatchim) "은" else "는"
 }

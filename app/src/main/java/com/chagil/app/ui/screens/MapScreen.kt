@@ -38,7 +38,7 @@ private val Rows = listOf(
     MapRow("2", "와이퍼 레버", listOf(ControlPoint.WIPER_STALK)),
     MapRow("3", "공조·김서림", listOf(ControlPoint.HVAC_FRONT_DEFROST)),
     MapRow("4", "열선 (핸들·뒷유리)", listOf(ControlPoint.STEERING_HEAT_BUTTON, ControlPoint.HVAC_REAR_DEFROST)),
-    MapRow("5", "벨트·좌석", listOf(ControlPoint.SEAT_BELT)),
+    MapRow("5", "벨트·좌석", listOf(ControlPoint.SEAT_BELT), soon = true),
     MapRow("Q", "운전 보조 퀴즈", emptyList(), soon = true),
 )
 
@@ -48,7 +48,7 @@ fun MapScreen(simulation: Boolean, litControls: Set<String>, onClose: () -> Unit
     val c = ChagilTheme.colors
     val t = ChagilTheme.type
     val zones = mapZones(litControls, emptySet())
-    val lit = MapCells.count { zones[it] == ZoneState.LIT }
+    val lit = CountedCells.count { zones[it] == ZoneState.LIT }
     PageFrame(
         simulation = simulation,
         topBar = {
@@ -66,8 +66,8 @@ fun MapScreen(simulation: Boolean, litControls: Set<String>, onClose: () -> Unit
                 Modifier.width(if (LocalWidthClass.current == WidthClass.COMPACT) 400.dp else 460.dp).fillMaxHeight()
                     .clip(ChagilShapes.large).background(c.surface).padding(ChagilSpacing.xl),
             ) {
-                Text("$lit / ${MapCells.size}칸", style = t.headline, color = c.text)
-                Text("이 차가 지원하는 기능 기준", style = t.body, color = c.textSecondary)
+                Text("$lit / ${CountedCells.size}칸", style = t.headline, color = c.text)
+                Text("확인할 수 있는 기능 기준", style = t.body, color = c.textSecondary)
                 Spacer(Modifier.height(ChagilSpacing.l))
                 Rows.forEach { row ->
                     val n = row.cells.count { zones[it] == ZoneState.LIT }

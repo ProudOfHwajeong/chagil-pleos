@@ -28,6 +28,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.selected
 import androidx.compose.ui.semantics.semantics
@@ -75,10 +76,10 @@ private data class SimRow(val label: String, val signal: Signal, val options: Li
 /** SCREENS §9 simulator rows. Wiper labels use the lever words the quests use (LO / HI). */
 private val SimRows = listOf(
     SimRow("기어", Signal.GEAR, listOf(Raw.GEAR_PARK to "P", Raw.GEAR_NEUTRAL to "N", Raw.GEAR_DRIVE to "D", Raw.GEAR_REVERSE to "R"), unreadable = true),
-    SimRow("전조등 스위치", Signal.LOW_BEAM_SWITCH, listOf("OFF" to "끔", "ON" to "켬", "AUTOMATIC" to "AUTO", "DAYTIME_RUNNING" to "주간등"), unreadable = true),
+    SimRow("전조등 스위치", Signal.LOW_BEAM_SWITCH, listOf("OFF" to "끔", "ON" to "켬", "AUTOMATIC" to "AUTO", "DAYTIME_RUNNING" to "미등"), unreadable = true),
     SimRow(
         "와이퍼 스위치", Signal.WIPER_SWITCH,
-        listOf("OFF" to "끔", "MIST" to "MIST", "INTERMITTENT_LEVEL_1" to "간헐 1", "CONTINUOUS_LEVEL_1" to "LO", "CONTINUOUS_LEVEL_2" to "HI", "AUTO" to "AUTO"),
+        listOf("OFF" to "끔", "AUTO" to "AUTO", "CONTINUOUS_LEVEL_1" to "LO", "CONTINUOUS_LEVEL_2" to "HI"),
     ),
     SimRow("앞유리 김서림", Signal.DEFROST_FRONT, listOf("OFF" to "끔", "ON" to "켬")),
     SimRow("뒷유리 열선", Signal.DEFROST_REAR, listOf("OFF" to "끔", "ON" to "켬")),
@@ -108,7 +109,7 @@ fun SidePanelOverlay(ui: PanelUi, a: PanelActions) = BoxWithConstraints(Modifier
     ) {
         if (ui.simulation) SimBanner(Modifier.fillMaxWidth())
         Row(verticalAlignment = Alignment.CenterVertically) {
-            Text("판정 로그", style = t.title, color = c.text, modifier = Modifier.weight(1f))
+            Text(if (ui.simulation) "판정 로그 · 시뮬레이터" else "판정 로그", style = t.title, color = c.text, modifier = Modifier.weight(1f))
             // In SIMULATION the banner right above already says so; the chip only names a real car signal.
             if (!ui.simulation) {
                 SourceChip(false)
@@ -128,10 +129,13 @@ fun SidePanelOverlay(ui: PanelUi, a: PanelActions) = BoxWithConstraints(Modifier
             // Only the latest connection note (e.g. "3초 안에 … → 시뮬레이션"), above the drill log.
             ui.diagnostics.lastOrNull()?.let { LogRow("연결", it.substringAfter(" · "), LogKind.INFO) }
             if (ui.log.isEmpty()) Text("아직 기록이 없어요", style = t.body, color = c.textTertiary)
-            ui.log.forEach { LogRow(it.time, it.text, it.kind) }
+            // REVIEW §7 rule 4: every simulated log line says so.
+            ui.log.forEach { LogRow(it.time, if (ui.simulation) "SIM · ${it.text}" else it.text, it.kind) }
         }
+        val panelScroll = rememberScrollState()
+        Box(Modifier.fillMaxWidth().weight(if (ui.simulation) 0.7f else 0.4f)) {
         Column(
-            Modifier.fillMaxWidth().weight(if (ui.simulation) 0.7f else 0.4f).verticalScroll(rememberScrollState()),
+            Modifier.fillMaxSize().verticalScroll(panelScroll),
             verticalArrangement = Arrangement.spacedBy(ChagilSpacing.m),
         ) {
             if (ui.simulation) {
@@ -157,6 +161,14 @@ fun SidePanelOverlay(ui: PanelUi, a: PanelActions) = BoxWithConstraints(Modifier
             SettingRow("음성 안내", listOf(false to "켬", true to "끔"), ui.muted, a.onMute)
             TopBarButton("기록 지우기", a.onResetProgress, icon = ChagilIcon.RETRY)
             Spacer(Modifier.height(ChagilSpacing.l))
+        }
+        // Scroll cue: fade the bottom edge while more rows sit below it.
+        if (panelScroll.canScrollForward) {
+            Box(
+                Modifier.align(Alignment.BottomCenter).fillMaxWidth().height(72.dp)
+                    .background(Brush.verticalGradient(listOf(c.surface.copy(alpha = 0f), c.surface))),
+            )
+        }
         }
     }
 }

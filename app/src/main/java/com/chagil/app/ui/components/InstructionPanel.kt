@@ -32,7 +32,7 @@ import com.chagil.app.ui.theme.ChagilSpacing
 import com.chagil.app.ui.theme.ChagilTheme
 
 /**
- * NORMAL = 지금 할 일, HINT = 오조작 안내 (amber, never "틀렸어요"),
+ * NORMAL = 지금 할 일, HINT = 다른 칸 안내 (amber, never "틀렸어요"),
  * CALM = 시간 초과 ("괜찮아요. 여기 있어요"), SUCCESS = 통과.
  */
 enum class InstructionTone { NORMAL, HINT, CALM, SUCCESS }
@@ -57,7 +57,8 @@ internal fun ChagilColors.toneContainer(t: InstructionTone) = when (t) {
  * @param headline instruction ≥ 48sp. Keep ≤ 14 Korean characters per line, max 2 lines.
  * @param voice what TTS says; shown with a speaker icon, quoted.
  * @param readValue e.g. "와이퍼 MIST" — rendered as "차가 읽은 값: 와이퍼 MIST".
- * @param checking shows "차가 확인하는 중" with a pulsing dot (car is judging).
+ * @param checking shows "차가 확인하는 중" with a pulsing primary dot (car is judging; green is kept for "passed").
+ * @param simulation the value comes from the in-app simulator: say "시뮬레이션 값", not "차가 읽은 값".
  */
 @Composable
 fun InstructionPanel(
@@ -68,6 +69,7 @@ fun InstructionPanel(
     readValue: String? = null,
     checking: Boolean = false,
     tone: InstructionTone = InstructionTone.NORMAL,
+    simulation: Boolean = false,
 ) {
     val c = ChagilTheme.colors
     val t = ChagilTheme.type
@@ -92,12 +94,12 @@ fun InstructionPanel(
                 Spacer(Modifier.height(ChagilSpacing.xxs))
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     if (checking) {
-                        StatusDot(c.success, pulsing = true)
+                        StatusDot(c.primary, pulsing = true)
                         Spacer(Modifier.width(ChagilSpacing.s))
-                        Text("차가 확인하는 중", style = t.label, color = c.success)
+                        Text(if (simulation) "시뮬레이션 값 확인 중" else "차가 확인하는 중", style = t.label, color = c.primary)
                         if (readValue != null) Spacer(Modifier.width(ChagilSpacing.xl))
                     }
-                    if (readValue != null) ReadValue(readValue, if (tone == InstructionTone.HINT) c.attention else c.textSecondary)
+                    if (readValue != null) ReadValue(readValue, if (tone == InstructionTone.HINT) c.attention else c.textSecondary, simulation = simulation)
                 }
             }
         }
@@ -127,7 +129,7 @@ fun VoiceLine(text: String, accent: Color, container: Color, modifier: Modifier 
 
 /** "차가 읽은 값: 와이퍼 MIST" — raw SDK value in mono so judges see it is a real reading. */
 @Composable
-fun ReadValue(value: String, color: Color, modifier: Modifier = Modifier) {
+fun ReadValue(value: String, color: Color, modifier: Modifier = Modifier, simulation: Boolean = false) {
     val c = ChagilTheme.colors
     Row(
         modifier
@@ -136,7 +138,7 @@ fun ReadValue(value: String, color: Color, modifier: Modifier = Modifier) {
             .padding(horizontal = ChagilSpacing.m, vertical = ChagilSpacing.xs),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        Text("차가 읽은 값", style = ChagilTheme.type.label, color = c.textSecondary)
+        Text(if (simulation) "시뮬레이션 값" else "차가 읽은 값", style = ChagilTheme.type.label, color = c.textSecondary)
         Spacer(Modifier.width(ChagilSpacing.s))
         Text(value, style = ChagilTheme.type.mono.copy(fontWeight = androidx.compose.ui.text.font.FontWeight.Bold), color = color)
     }

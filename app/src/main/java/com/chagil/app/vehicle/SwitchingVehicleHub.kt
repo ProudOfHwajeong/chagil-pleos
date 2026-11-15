@@ -89,7 +89,7 @@ class SwitchingVehicleHub internal constructor(
     override fun start() {
         if (started) return
         started = true
-        runCatching(onStartPlatform).onFailure { log.add("주행 제한 감시 시작 실패 · ${it.shortMessage()}") }
+        runCatching(onStartPlatform).onFailure { log.add("주행 제한 감시 시작 안 됨 · ${it.shortMessage()}") }
         if (_forcedSimulation.value) activateSimulation() else tryPleos()
     }
 
@@ -122,7 +122,7 @@ class SwitchingVehicleHub internal constructor(
         val source = try {
             sdkFactory().also { it.start() }
         } catch (t: Throwable) {
-            log.add("실차 신호 연결 안 됨 → 시뮬레이션 · ${t.shortMessage()}")
+            log.add("차 신호 연결 안 됨 → 시뮬레이션 · ${t.shortMessage()}")
             activateSimulation()
             return
         }
@@ -158,7 +158,7 @@ class SwitchingVehicleHub internal constructor(
     private fun stopSdk() {
         val s = sdk ?: return
         sdk = null
-        runCatching { s.stop() }.onFailure { log.add("SDK 정리 실패 · ${it.shortMessage()}") }
+        runCatching { s.stop() }.onFailure { log.add("SDK 정리 안 됨 · ${it.shortMessage()}") }
     }
 
     companion object {

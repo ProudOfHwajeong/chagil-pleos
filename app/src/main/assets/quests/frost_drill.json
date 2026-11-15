@@ -1,7 +1,7 @@
 {
   "id": "frost_drill",
   "title": "성에 낀 아침 드릴",
-  "subtitle": "앞유리 · 뒷유리 · 핸들 열선, 60초",
+  "subtitle": "앞유리 · 뒷유리 · 핸들 열선",
   "level": "L1",
   "limitSec": 60,
   "zone": "heating",
@@ -15,7 +15,7 @@
     {
       "id": "defrost_front",
       "label": "앞유리 성에 제거",
-      "instruction": "앞유리 성에를 녹여요",
+      "instruction": "앞유리 성에를 녹이세요",
       "voice": "공조 패널에서 앞유리 그림 버튼을 눌러요. 바람이 앞유리로 모여요.",
       "control": "HVAC_FRONT_DEFROST",
       "read": "HVAC.defroster.FRONT",
@@ -31,7 +31,7 @@
     {
       "id": "defrost_rear",
       "label": "뒷유리 열선",
-      "instruction": "뒷유리 열선을 켜요",
+      "instruction": "뒷유리 열선을 켜세요",
       "voice": "네모난 뒷유리 그림 버튼이에요. 열선이 뒷유리 성에를 녹여요.",
       "control": "HVAC_REAR_DEFROST",
       "read": "HVAC.defroster.REAR",
@@ -47,7 +47,7 @@
     {
       "id": "steering_heat",
       "label": "핸들 열선",
-      "instruction": "핸들 열선을 켜요",
+      "instruction": "핸들 열선을 켜세요",
       "voice": "핸들 그림에 물결이 있는 버튼이에요. 손이 금방 따뜻해져요.",
       "control": "STEERING_HEAT_BUTTON",
       "read": "SteeringWheel.heat",

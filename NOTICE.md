@@ -9,7 +9,7 @@
 |---|---|---|---|---|
 | Kotlin 표준 라이브러리 | `org.jetbrains.kotlin:kotlin-stdlib` | 2.1.20 | Apache-2.0 | https://github.com/JetBrains/kotlin |
 | kotlinx.serialization (JSON) | `org.jetbrains.kotlinx:kotlinx-serialization-json` | 1.7.3 | Apache-2.0 | https://github.com/Kotlin/kotlinx.serialization |
-| kotlinx.coroutines (전이 의존성) | `org.jetbrains.kotlinx:kotlinx-coroutines-*` | AndroidX가 정함 | Apache-2.0 | https://github.com/Kotlin/kotlinx.coroutines |
+| kotlinx.coroutines | `org.jetbrains.kotlinx:kotlinx-coroutines-android` | 1.9.0 | Apache-2.0 | https://github.com/Kotlin/kotlinx.coroutines |
 | AndroidX Core KTX | `androidx.core:core-ktx` | 1.15.0 | Apache-2.0 | https://developer.android.com/jetpack/androidx |
 | AndroidX Lifecycle (runtime-compose, viewmodel-compose) | `androidx.lifecycle:*` | 2.8.7 | Apache-2.0 | 〃 |
 | AndroidX Activity Compose | `androidx.activity:activity-compose` | 1.9.3 | Apache-2.0 | 〃 |

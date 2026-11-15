@@ -61,13 +61,16 @@ object DebugScenes {
             "confirm" -> { sim.setUnreadable(Signal.GEAR); delay(200); vm.onCardTap(rain) }
             "neutral" -> { sim.set(Signal.GEAR, Raw.GEAR_NEUTRAL); delay(200); vm.onCardTap(rain) }
             "drill" -> drillAtStep2()
-            "hint" -> { drillAtStep2(); sim.set(Signal.WIPER_SWITCH, "MIST") }
+            "hint" -> { drillAtStep2(); sim.set(Signal.WIPER_SWITCH, "AUTO") }
             "selfcheck" -> { sim.setUnreadable(Signal.LOW_BEAM_SWITCH); vm.startDrill(rain) }
             "pause" -> { drillAtStep2(); c.engine.pause() }
             "rest" -> { drillAtStep2(); sim.set(Signal.GEAR, Raw.GEAR_DRIVE) }
             "resume" -> { drillAtStep2(); sim.set(Signal.GEAR, Raw.GEAR_DRIVE); delay(1_000); sim.set(Signal.GEAR, Raw.GEAR_PARK) }
             "timeout" -> { sim.set(Signal.LOW_BEAM_SWITCH, Raw.ON); vm.startDrill(rain.copy(limitSec = 4)) }
             "completed" -> {
+                // Repeatable captures: drop records of earlier runs, then seed one "last time" of 14.3 s.
+                c.progress.resetAll()
+                c.progress.saveResult(rain.id, 14_300, emptySet())
                 sim.set(Signal.LOW_BEAM_SWITCH, Raw.ON)
                 vm.startDrill(rain)
                 delay(1_500); sim.set(Signal.WIPER_SWITCH, "CONTINUOUS_LEVEL_1")
@@ -75,7 +78,7 @@ object DebugScenes {
                 delay(1_500); sim.set(Signal.WIPER_SWITCH, Raw.OFF)
             }
             "map" -> vm.openMap()
-            "sim" -> { drillAtStep2(); sim.set(Signal.WIPER_SWITCH, "MIST"); vm.setPanel(true) }
+            "sim" -> { drillAtStep2(); sim.set(Signal.WIPER_SWITCH, "AUTO"); vm.setPanel(true) }
         }
     }
 }

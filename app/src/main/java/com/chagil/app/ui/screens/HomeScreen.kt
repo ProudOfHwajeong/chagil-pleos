@@ -101,7 +101,7 @@ fun HomeScreen(
         }
         Spacer(Modifier.height(ChagilSpacing.l))
         val zones = mapZones(litControls, emptySet())
-        val lit = MapCells.count { zones[it] == ZoneState.LIT }
+        val lit = CountedCells.count { zones[it] == ZoneState.LIT }
         Row(
             Modifier.fillMaxWidth().weight(1f).clip(ChagilShapes.large).background(c.surface).padding(ChagilSpacing.xl),
             verticalAlignment = Alignment.CenterVertically,
@@ -109,7 +109,7 @@ fun HomeScreen(
             Column(Modifier.width(if (compact) 320.dp else 420.dp).fillMaxHeight(), verticalArrangement = Arrangement.spacedBy(ChagilSpacing.s)) {
                 Text("내 차 도면", style = t.headline, color = c.text)
                 Text(
-                    if (lit == 0) "첫 드릴을 해 보세요" else "$lit / ${MapCells.size}칸에 불이 들어왔어요",
+                    if (lit == 0) "첫 드릴을 해 보세요" else "$lit / ${CountedCells.size}칸에 불이 들어왔어요",
                     style = t.bodyLarge, color = c.textSecondary,
                 )
                 Spacer(Modifier.height(ChagilSpacing.s))

@@ -2,7 +2,7 @@ package com.chagil.app.vehicle
 
 import kotlinx.coroutines.flow.StateFlow
 
-/** Where the values come from. The UI must label SIMULATION clearly ("시뮬레이션 — 실제 차 신호가 아닙니다"). */
+/** Where the values come from. The UI must label SIMULATION clearly ("시뮬레이션 중이에요. 실제 차 신호가 아니에요"). */
 enum class SourceMode { PLEOS_SDK, SIMULATION }
 
 /** The single place the app receives vehicle values from. Read-only: nothing here changes the car. */

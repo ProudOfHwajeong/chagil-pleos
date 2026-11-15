@@ -3,20 +3,20 @@
 
     <uses-feature android:name="android.hardware.type.automotive" android:required="true" />
 
-    <!-- Read-only vehicle permissions. The app never calls any Vehicle SDK set* function. -->
-    <uses-permission android:name="pleos.car.permission.CAR_CLIMATE" />
-    <uses-permission android:name="pleos.car.permission.CAR_LIGHTS" />
-    <uses-permission android:name="pleos.car.permission.CAR_POWERTRAIN" />
-    <uses-permission android:name="pleos.car.permission.CAR_INFO" />
+    <!-- Read-only. Vehicle SDK 2.3.2 @RequiresPermission (docs/compliance/REVIEW.md §2).
+         The app never calls any Vehicle SDK set* function; no CONTROL_*, INTERNET or location permission. -->
+    <uses-permission android:name="pleos.car.permission.CAR_DRIVE" />    <!-- Gear -->
+    <uses-permission android:name="pleos.car.permission.CAR_WINDOWS" />  <!-- Wiper -->
+    <uses-permission android:name="pleos.car.permission.CAR_LIGHTS" />   <!-- LowBeam -->
+    <uses-permission android:name="pleos.car.permission.CAR_CLIMATE" />  <!-- Defroster, steering heat -->
+    <!-- Temporary: declared by the official sample; drop once wiper reads are verified without it. -->
     <uses-permission android:name="pleos.car.permission.READ_WINDSHIELD_WIPERS" />
-    <!-- Required by Vehicle SDK 2.3.2 (@RequiresCustomPermission): Gear → CAR_DRIVE, Wiper → CAR_WINDOWS. -->
-    <uses-permission android:name="pleos.car.permission.CAR_DRIVE" />
-    <uses-permission android:name="pleos.car.permission.CAR_WINDOWS" />
 
     <application
         android:allowBackup="false"
         android:label="@string/app_name"
-        android:icon="@android:drawable/sym_def_app_icon"
+        android:icon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@android:style/Theme.Material.NoActionBar">
         <!-- CarUxRestrictions (driving restriction). Optional: plain emulators have no Car service. -->

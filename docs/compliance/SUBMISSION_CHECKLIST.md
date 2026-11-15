@@ -59,11 +59,11 @@
 ## F. 접수 메일과 공개 전환 (팀이 할 일)
 
 - [ ] 접수 메일에 저장소 주소와 최종 커밋 해시를 적는다.
-  - 저장소: `https://github.com/13JVV/chagil-pleos`
+  - 저장소: `https://github.com/ProudOfHwajeong/chagil-pleos`
   - 해시: `git rev-parse origin/main` (40자 전체를 적고, 7자 축약도 괄호 안에 함께 적는다)
   - 메일을 보낸 뒤에는 `main`에 push하지 않는다. 고칠 것이 생기면 새 해시로 메일을 다시 보낸다.
 - [ ] 제출 페이지에 저장소 주소와 APK 경로(`apk/<파일명>`)를 입력한다.
-- [ ] 11-16(월)까지 Public으로 전환한다. `gh repo edit 13JVV/chagil-pleos --visibility public --accept-visibility-change-consequences` (전환 전에 A의 비밀 점검을 한 번 더 한다)
+- [ ] 11-16(월)까지 Public으로 전환한다. `gh repo edit ProudOfHwajeong/chagil-pleos --visibility public --accept-visibility-change-consequences` (전환 전에 A의 비밀 점검을 한 번 더 한다)
 - [ ] 11-23(월)까지 Public을 유지한다. 그 사이 저장소 이름 변경, 삭제, 비공개 전환은 하지 않는다. 전환한 뒤 로그아웃한 창에서 주소와 APK 경로가 열리는지 확인한다.
 - [ ] 공개가 어렵다면 대안으로, 소스와 APK를 묶은 압축 파일의 내려받기 주소를 마감 전에 접수 메일로 보낸다.
 - [ ] Collaborator 초대는 필요 없다.

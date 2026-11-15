@@ -50,7 +50,12 @@
       "voice": "와이퍼 레버를 LO나 HI에 두세요. 비가 세면 HI예요.",
       "control": "WIPER_STALK",
       "read": "Wiper.switch",
-      "toAnyOf": ["INTERMITTENT_LEVEL_1", "CONTINUOUS_LEVEL_1", "CONTINUOUS_LEVEL_2"],
+      "toAnyOf": [
+        "INTERMITTENT_LEVEL_1",
+        "CONTINUOUS_LEVEL_1",
+        "CONTINUOUS_LEVEL_2",
+        "CONTINUOUS_LEVEL_3"
+      ],
       "stableMs": 1000,
       "alreadyOn": "pass",
       "ifUnreadable": "selfCheck",
@@ -62,10 +67,6 @@
         "AUTO": {
           "text": "AUTO는 센서에 맡겨요",
           "voice": "AUTO도 닦지만, 오늘은 직접 LO나 HI에 맞춰 봐요."
-        },
-        "CONTINUOUS_LEVEL_3": {
-          "text": "아주 빠른 칸이에요",
-          "voice": "LO나 HI 칸에 두세요."
         },
         "CONTINUOUS_LEVEL_4": {
           "text": "아주 빠른 칸이에요",
@@ -132,6 +133,10 @@
           "voice": "AUTO는 물이 닿으면 다시 움직여요. OFF까지 옮겨 주세요."
         },
         "CONTINUOUS_LEVEL_2": {
+          "text": "지금은 HI예요",
+          "voice": "HI는 가장 빠른 칸이에요. OFF 칸에 두세요."
+        },
+        "CONTINUOUS_LEVEL_3": {
           "text": "지금은 HI예요",
           "voice": "HI는 가장 빠른 칸이에요. OFF 칸에 두세요."
         }

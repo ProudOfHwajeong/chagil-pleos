@@ -79,7 +79,7 @@ private val SimRows = listOf(
     SimRow("전조등 스위치", Signal.LOW_BEAM_SWITCH, listOf("OFF" to "끔", "ON" to "켬", "AUTOMATIC" to "AUTO", "DAYTIME_RUNNING" to "미등"), unreadable = true),
     SimRow(
         "와이퍼 스위치", Signal.WIPER_SWITCH,
-        listOf("OFF" to "끔", "AUTO" to "AUTO", "CONTINUOUS_LEVEL_1" to "LO", "CONTINUOUS_LEVEL_2" to "HI"),
+        listOf("OFF" to "끔", "AUTO" to "AUTO", "CONTINUOUS_LEVEL_1" to "LO", "CONTINUOUS_LEVEL_3" to "HI"),
     ),
     SimRow("앞유리 김서림", Signal.DEFROST_FRONT, listOf("OFF" to "끔", "ON" to "켬")),
     SimRow("뒷유리 열선", Signal.DEFROST_REAR, listOf("OFF" to "끔", "ON" to "켬")),

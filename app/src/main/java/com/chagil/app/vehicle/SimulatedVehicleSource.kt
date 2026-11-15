@@ -90,7 +90,7 @@ class SimulatedVehicleSource(
         fun optionsFor(signal: Signal): List<String> = when (signal) {
             Signal.GEAR -> listOf(Raw.GEAR_PARK, Raw.GEAR_REVERSE, Raw.GEAR_NEUTRAL, Raw.GEAR_DRIVE)
             Signal.WIPER_SWITCH -> listOf(
-                Raw.OFF, "AUTO", "CONTINUOUS_LEVEL_1", "CONTINUOUS_LEVEL_2",
+                Raw.OFF, "AUTO", "CONTINUOUS_LEVEL_1", "CONTINUOUS_LEVEL_3",
             )
             Signal.WIPER_STATE -> listOf(Raw.OFF, Raw.ON)
             Signal.LOW_BEAM_SWITCH -> listOf(Raw.OFF, Raw.ON, "DAYTIME_RUNNING", "AUTOMATIC")

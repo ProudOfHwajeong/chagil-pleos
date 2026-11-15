@@ -31,7 +31,7 @@ import com.chagil.app.ui.theme.ChagilShapes
 import com.chagil.app.ui.theme.ChagilSpacing
 import com.chagil.app.ui.theme.ChagilTheme
 
-const val SIM_BANNER_TEXT = "시뮬레이션 — 실제 차 신호가 아닙니다"
+const val SIM_BANNER_TEXT = "시뮬레이션 중이에요. 실제 차 신호가 아니에요"
 
 /**
  * Always-visible label while the signal source is SIMULATION. Diagonal stripes = "not real",

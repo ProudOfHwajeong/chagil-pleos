@@ -43,6 +43,10 @@
         "INTERMITTENT_LEVEL_1": {
           "text": "지금은 간헐 칸이에요",
           "voice": "띄엄띄엄 닦는 칸이에요. 한 칸 옮겨 OFF에 두세요."
+        },
+        "CONTINUOUS_LEVEL_3": {
+          "text": "지금은 HI예요",
+          "voice": "HI는 가장 빠른 칸이에요. OFF 칸에 두세요."
         }
       },
       "where": {

@@ -123,7 +123,7 @@
 
 ## 7. 앱 아이콘
 
-`res/drawable/ic_launcher_background.xml`과 `ic_launcher_foreground.xml`, `res/mipmap-anydpi-v26/ic_launcher(_round).xml`(monochrome 포함). 짙은 남색 바탕에 흰 핸들 테두리를 두고, 가운데 초록 체크로 차가 확인한다는 뜻을 담았다. 66dp 안전 영역 안에 들어간다. 매니페스트 연결은 `feat/screens`가 한다(`android:icon="@mipmap/ic_launcher"`, `android:roundIcon="@mipmap/ic_launcher_round"`).
+`res/drawable/ic_launcher_background.xml`과 `ic_launcher_foreground.xml`, `res/mipmap-anydpi-v26/ic_launcher(_round).xml`(monochrome 포함). 검은 바탕에 흰색으로, 웃는 얼굴의 차를 손이 쓰다듬는 모습을 그렸다. 차를 길들인다는 앱 이름을 그대로 담았다. 66dp 안전 영역 안에 들어간다. 매니페스트 연결은 `feat/screens`가 한다(`android:icon="@mipmap/ic_launcher"`, `android:roundIcon="@mipmap/ic_launcher_round"`).
 
 ## 8. 참고 자료
 

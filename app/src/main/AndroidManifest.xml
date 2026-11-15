@@ -9,6 +9,9 @@
     <uses-permission android:name="pleos.car.permission.CAR_POWERTRAIN" />
     <uses-permission android:name="pleos.car.permission.CAR_INFO" />
     <uses-permission android:name="pleos.car.permission.READ_WINDSHIELD_WIPERS" />
+    <!-- Required by Vehicle SDK 2.3.2 (@RequiresCustomPermission): Gear → CAR_DRIVE, Wiper → CAR_WINDOWS. -->
+    <uses-permission android:name="pleos.car.permission.CAR_DRIVE" />
+    <uses-permission android:name="pleos.car.permission.CAR_WINDOWS" />
 
     <application
         android:allowBackup="false"
@@ -16,6 +19,8 @@
         android:icon="@android:drawable/sym_def_app_icon"
         android:supportsRtl="true"
         android:theme="@android:style/Theme.Material.NoActionBar">
+        <!-- CarUxRestrictions (driving restriction). Optional: plain emulators have no Car service. -->
+        <uses-library android:name="android.car" android:required="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true"

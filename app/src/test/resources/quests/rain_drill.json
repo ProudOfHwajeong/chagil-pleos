@@ -1,0 +1,31 @@
+{
+  "id": "rain_drill",
+  "title": "폭우 드릴",
+  "subtitle": "전조등, 와이퍼, 김서림 제거",
+  "level": "L1",
+  "limitSec": 45,
+  "zone": "windshield",
+  "availability": "open",
+  "label": null,
+  "voice": true,
+  "intro": {"text": "비가 쏟아진다고 생각해 볼게요.", "voice": "비가 쏟아진다고 생각해 볼게요. 45초 안에 해 봐요."},
+  "steps": [
+    {"id": "lowbeam", "label": "전조등 켜기", "instruction": "전조등을 켜 보세요", "voice": "전조등을 켜 보세요.",
+     "control": "LIGHT_STALK", "read": "LowBeam.switch", "to": "ON", "stableMs": 1000,
+     "alreadyOn": "pass", "ifUnreadable": "selfCheck",
+     "wrong": {"AUTOMATIC": {"text": "지금은 오토예요. 한 칸 더 돌려요", "voice": "지금은 오토예요. 한 칸 더 돌려 보세요."}},
+     "where": {"text": "왼쪽 레버 끝을 돌려요", "voice": "핸들 왼쪽 레버 끝을 돌려요."}},
+    {"id": "wiper1", "label": "와이퍼 한 단계", "instruction": "와이퍼를 한 단계 켜 보세요",
+     "control": "WIPER_STALK", "read": "Wiper.switch", "toAnyOf": ["INTERMITTENT_LEVEL_1", "CONTINUOUS_LEVEL_1"], "stableMs": 1000,
+     "wrong": {"MIST": {"text": "지금은 한 번 닦기예요. 반대쪽으로 한 칸", "voice": "반대쪽으로 한 칸 옮겨 보세요."},
+               "CONTINUOUS_LEVEL_2": "너무 빨라요. 한 칸 내려요"},
+     "where": {"text": "오른쪽 레버예요", "voice": "핸들 오른쪽 레버예요."}},
+    {"id": "defrost", "label": "앞유리 김서림 제거", "instruction": "앞유리 김서림을 없애 보세요",
+     "control": "HVAC_FRONT_DEFROST", "read": "HVAC.defroster", "area": "FRONT", "to": "ON", "stableMs": 1000,
+     "where": {"text": "공조 패널, 앞유리 그림 버튼", "voice": "공조 패널, 앞유리 그림이 있는 버튼이에요."}},
+    {"id": "restore", "label": "와이퍼 끄기", "instruction": "와이퍼를 꺼 주세요",
+     "control": "WIPER_STALK", "read": "Wiper.switch", "to": "OFF", "stableMs": 1000, "role": "restore"}
+  ],
+  "guards": [],
+  "done": {"text": "잘했어요", "voice": "와이퍼도 잘 꺼 두셨어요."}
+}

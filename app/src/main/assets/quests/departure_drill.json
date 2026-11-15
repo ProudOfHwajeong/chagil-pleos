@@ -1,0 +1,69 @@
+{
+  "id": "departure_drill",
+  "title": "출발 준비 드릴",
+  "subtitle": "탄 사람 모두 벨트 확인",
+  "level": "L1",
+  "limitSec": 60,
+  "zone": "seat",
+  "availability": "coming_soon",
+  "label": null,
+  "intro": {
+    "text": "출발 전에 벨트를 확인해요",
+    "voice": "출발 준비 드릴이에요. 탄 사람 모두 벨트를 맸는지 차와 함께 확인해요."
+  },
+  "steps": [
+    {
+      "id": "belt_driver",
+      "label": "운전석 벨트",
+      "instruction": "벨트를 매 주세요",
+      "voice": "운전석 벨트를 딸깍 소리가 날 때까지 끼워 주세요.",
+      "control": "SEAT_BELT",
+      "read": "SeatBelt.buckled.ROW_1_LEFT",
+      "to": "ON",
+      "stableMs": 1000,
+      "alreadyOn": "pass",
+      "ifUnreadable": "selfCheck",
+      "where": {
+        "text": "운전석 오른쪽 아래 버클",
+        "voice": "엉덩이 오른쪽 옆에 버클이 있어요. 딸깍 소리가 나면 돼요."
+      }
+    },
+    {
+      "id": "belt_passenger",
+      "label": "조수석 벨트",
+      "instruction": "옆자리 벨트 확인",
+      "voice": "조수석에 사람이 탔다면 벨트를 맸는지 봐 주세요.",
+      "control": "SEAT_BELT",
+      "read": "SeatBelt.buckled.ROW_1_RIGHT",
+      "to": "ON",
+      "stableMs": 1000,
+      "alreadyOn": "pass",
+      "ifUnreadable": "selfCheck",
+      "where": {
+        "text": "조수석 왼쪽 아래 버클",
+        "voice": "조수석 엉덩이 왼쪽 옆 버클이에요."
+      }
+    },
+    {
+      "id": "rear_check",
+      "label": "뒷좌석 · 카시트",
+      "instruction": "뒷좌석을 확인해요",
+      "voice": "뒷좌석도 벨트를 맸는지 봐 주세요. 카시트에 앉은 아이는 카시트 벨트를 확인해요.",
+      "control": "SEAT_BELT",
+      "read": "SeatBelt.buckled.ROW_2",
+      "to": "ON",
+      "stableMs": 1000,
+      "alreadyOn": "pass",
+      "ifUnreadable": "selfCheck",
+      "where": {
+        "text": "뒷좌석 벨트와 카시트",
+        "voice": "뒤를 돌아보기 어렵다면 차에서 내려 확인해도 좋아요."
+      }
+    }
+  ],
+  "guards": [],
+  "done": {
+    "text": "출발 준비 끝",
+    "voice": "모두 벨트를 맸어요. 안전하게 다녀오세요."
+  }
+}

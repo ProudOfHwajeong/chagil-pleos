@@ -1,0 +1,76 @@
+{
+  "id": "frost_drill",
+  "title": "성에 낀 아침 드릴",
+  "subtitle": "앞유리 · 뒷유리 · 핸들 열선, 60초",
+  "level": "L1",
+  "limitSec": 60,
+  "zone": "heating",
+  "availability": "open",
+  "label": null,
+  "intro": {
+    "text": "유리에 성에가 낀 아침이에요",
+    "voice": "성에 낀 아침 드릴이에요. 와이퍼는 꺼 둔 채로, 열선부터 켜 볼게요."
+  },
+  "steps": [
+    {
+      "id": "defrost_front",
+      "label": "앞유리 성에 제거",
+      "instruction": "앞유리 성에를 녹여요",
+      "voice": "공조 패널에서 앞유리 그림 버튼을 눌러요. 바람이 앞유리로 모여요.",
+      "control": "HVAC_FRONT_DEFROST",
+      "read": "HVAC.defroster.FRONT",
+      "to": "ON",
+      "stableMs": 1000,
+      "alreadyOn": "pass",
+      "ifUnreadable": "selfCheck",
+      "where": {
+        "text": "공조 패널, 앞유리 그림 버튼",
+        "voice": "공조 패널, 앞유리 그림이 있는 버튼이에요. 물결 화살표가 위로 올라가요."
+      }
+    },
+    {
+      "id": "defrost_rear",
+      "label": "뒷유리 열선",
+      "instruction": "뒷유리 열선을 켜요",
+      "voice": "네모난 뒷유리 그림 버튼이에요. 열선이 뒷유리 성에를 녹여요.",
+      "control": "HVAC_REAR_DEFROST",
+      "read": "HVAC.defroster.REAR",
+      "to": "ON",
+      "stableMs": 1000,
+      "alreadyOn": "pass",
+      "ifUnreadable": "selfCheck",
+      "where": {
+        "text": "공조 패널, 네모난 뒷유리 버튼",
+        "voice": "공조 패널, 네모 안에 물결 화살표가 있는 버튼이에요."
+      }
+    },
+    {
+      "id": "steering_heat",
+      "label": "핸들 열선",
+      "instruction": "핸들 열선을 켜요",
+      "voice": "핸들 그림에 물결이 있는 버튼이에요. 손이 금방 따뜻해져요.",
+      "control": "STEERING_HEAT_BUTTON",
+      "read": "SteeringWheel.heat",
+      "notAnyOf": ["0"],
+      "stableMs": 1000,
+      "alreadyOn": "pass",
+      "ifUnreadable": "selfCheck",
+      "where": {
+        "text": "핸들 그림에 물결 있는 버튼",
+        "voice": "핸들 그림 위로 물결이 올라가는 버튼이에요. 차마다 자리가 달라요. 핸들이나 공조 패널 근처를 봐 주세요."
+      }
+    }
+  ],
+  "guards": [
+    {
+      "read": "Wiper.switch",
+      "notAnyOf": ["OFF", "OTHER", "SERVICE"],
+      "text": "언 유리엔 와이퍼를 꺼 두세요",
+      "voice": "언 유리에서 와이퍼를 움직이면 고무날과 모터가 상할 수 있어요. OFF에 두고 성에부터 녹여요."
+    }
+  ],
+  "done": {
+    "text": "언 아침 준비 끝",
+    "voice": "성에가 다 녹은 뒤에 와이퍼를 써요. 예열은 짧게 하고, 오래 공회전하지 않아요."
+  }
+}

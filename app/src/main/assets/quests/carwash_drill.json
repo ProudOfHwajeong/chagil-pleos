@@ -1,0 +1,59 @@
+{
+  "id": "carwash_drill",
+  "title": "세차 대비 드릴",
+  "subtitle": "자동세차 전 와이퍼 끄기, 30초",
+  "level": "L1",
+  "limitSec": 30,
+  "zone": "windshield",
+  "availability": "open",
+  "label": null,
+  "intro": {
+    "text": "자동세차 들어가기 전이에요",
+    "voice": "자동세차에 들어가기 전이에요. AUTO 와이퍼는 세차 물을 비로 알고 움직일 수 있어요."
+  },
+  "steps": [
+    {
+      "id": "wiper_off",
+      "label": "와이퍼 AUTO 끄기",
+      "instruction": "와이퍼를 OFF로",
+      "voice": "와이퍼 레버를 OFF 칸에 두세요.",
+      "control": "WIPER_STALK",
+      "read": "Wiper.switch",
+      "to": "OFF",
+      "stableMs": 1000,
+      "alreadyOn": "pass",
+      "ifUnreadable": "selfCheck",
+      "wrong": {
+        "AUTO": {
+          "text": "아직 AUTO예요",
+          "voice": "AUTO는 물이 닿으면 움직여요. 한 칸 옮겨 OFF에 두세요."
+        },
+        "MIST": {
+          "text": "지금은 '한 번 닦기'예요",
+          "voice": "MIST는 한 번 닦는 칸이에요. 레버를 OFF 칸에 두세요."
+        },
+        "CONTINUOUS_LEVEL_1": {
+          "text": "반대쪽, LO로 갔어요",
+          "voice": "LO는 계속 닦는 칸이에요. 반대로 옮겨 OFF에 두세요."
+        },
+        "CONTINUOUS_LEVEL_2": {
+          "text": "반대쪽, HI로 갔어요",
+          "voice": "HI는 가장 빠른 칸이에요. 반대로 끝까지 옮겨 OFF에 두세요."
+        },
+        "INTERMITTENT_LEVEL_1": {
+          "text": "지금은 간헐 칸이에요",
+          "voice": "띄엄띄엄 닦는 칸이에요. 한 칸 옮겨 OFF에 두세요."
+        }
+      },
+      "where": {
+        "text": "와이퍼 레버, OFF 칸",
+        "voice": "핸들 옆 와이퍼 레버예요. AUTO 바로 옆, OFF 칸에 맞추면 돼요."
+      }
+    }
+  ],
+  "guards": [],
+  "done": {
+    "text": "세차 준비 끝",
+    "voice": "와이퍼를 잘 꺼 두셨어요. 세차가 끝나면 필요할 때 AUTO로 다시 돌려 두세요."
+  }
+}

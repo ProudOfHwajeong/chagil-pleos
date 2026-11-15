@@ -1,0 +1,15 @@
+.gradle/
+build/
+/local.properties
+.idea/
+*.iml
+.DS_Store
+captures/
+.externalNativeBuild/
+.cxx/
+# signing secrets — never commit
+keystore.properties
+*.jks
+*.keystore
+# worktrees for parallel agents
+/.worktrees/

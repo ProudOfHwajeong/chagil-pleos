@@ -37,6 +37,8 @@ data class ChagilColors(
     val cockpitLine: Color,
     val cockpitFill: Color,
     val cockpitPart: Color,
+    /** Dim layer behind dialogs and the side panel. Dark in both themes so a white card stands out. */
+    val scrim: Color,
 )
 
 val NightColors = ChagilColors(
@@ -65,6 +67,7 @@ val NightColors = ChagilColors(
     cockpitLine = Color(0xFF4E5B6B),
     cockpitFill = Color(0xFF121820),
     cockpitPart = Color(0xFF26303C),
+    scrim = Color(0xD1060A0E),
 )
 
 val DayColors = ChagilColors(
@@ -93,6 +96,7 @@ val DayColors = ChagilColors(
     cockpitLine = Color(0xFF8C98A7),
     cockpitFill = Color(0xFFE9EDF2),
     cockpitPart = Color(0xFFD5DCE4),
+    scrim = Color(0x8C0E1621),
 )
 
 val LocalChagilColors = staticCompositionLocalOf { NightColors }

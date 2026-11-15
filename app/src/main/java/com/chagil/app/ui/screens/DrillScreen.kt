@@ -247,7 +247,7 @@ fun Scrim(onTap: (() -> Unit)? = null, content: @Composable () -> Unit) {
     Box(
         Modifier
             .fillMaxSize()
-            .background(ChagilTheme.colors.background.copy(alpha = 0.8f))
+            .background(ChagilTheme.colors.scrim)
             .clickable(interactionSource = remember { MutableInteractionSource() }, indication = null) { onTap?.invoke() },
         contentAlignment = Alignment.Center,
     ) { content() }
@@ -281,11 +281,6 @@ private fun TimedOutView(ui: DrillUi, s: DrillState.TimedOut, a: DrillActions) {
                 }
                 Spacer(Modifier.height(ChagilSpacing.l))
                 ControlLocator(point, Modifier.fillMaxWidth().weight(1f), tone = LocatorTone.ATTENTION)
-                Spacer(Modifier.height(ChagilSpacing.l))
-                Row(horizontalArrangement = Arrangement.spacedBy(ChagilSpacing.targetGap)) {
-                    PrimaryButton("다시", a.onRetry, icon = ChagilIcon.RETRY)
-                    SecondaryButton("나중에", a.onQuit)
-                }
             }
             SidePanel {
                 Text("할 일", style = t.label, color = c.textSecondary)
@@ -302,6 +297,11 @@ private fun TimedOutView(ui: DrillUi, s: DrillState.TimedOut, a: DrillActions) {
                         )
                     },
                 )
+                // Same place as the completion screen: the next action sits at the bottom of the side panel.
+                Spacer(Modifier.weight(1f))
+                PrimaryButton("다시", a.onRetry, Modifier.fillMaxWidth(), icon = ChagilIcon.RETRY)
+                Spacer(Modifier.height(ChagilSpacing.l))
+                SecondaryButton("나중에", a.onQuit, Modifier.fillMaxWidth())
             }
         }
     }
@@ -316,6 +316,8 @@ private fun CompletedView(ui: DrillUi, s: DrillState.Completed, a: DrillActions)
     val q = ui.quest
     val (delta, improved) = when {
         s.previousBestMs == null -> "첫 기록이에요" to null
+        // Below 0.1s the rounded gap would read "0.0초 빨라요"; say it plainly instead.
+        s.previousBestMs - s.elapsedMs in 0L..99L -> "지난번과 거의 같아요" to false
         s.elapsedMs < s.previousBestMs -> "지난번보다 ${LogFormat.seconds(s.previousBestMs - s.elapsedMs)}초 빨라요" to true
         else -> "지난 기록 ${LogFormat.seconds(s.previousBestMs)}초" to false
     }

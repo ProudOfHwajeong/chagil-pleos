@@ -1,6 +1,7 @@
 package com.chagil.app.ui.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -9,7 +10,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -44,9 +45,11 @@ fun PromptCard(
     val c = ChagilTheme.colors
     Column(
         modifier
-            .widthIn(max = 880.dp)
+            .width(840.dp)
             .clip(ChagilShapes.xl)
             .background(c.surface)
+            // Night: a hairline keeps the dark card from melting into the dimmed screen behind it.
+            .then(if (c.isNight) Modifier.border(1.5.dp, c.outline, ChagilShapes.xl) else Modifier)
             .padding(horizontal = ChagilSpacing.xxxl, vertical = ChagilSpacing.xxl),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
@@ -57,7 +60,8 @@ fun PromptCard(
         Text(title, style = ChagilTheme.type.headline.copy(fontSize = ChagilTheme.type.instruction.fontSize, lineHeight = ChagilTheme.type.instruction.lineHeight), color = c.text, textAlign = TextAlign.Center)
         if (body != null) {
             Spacer(Modifier.height(ChagilSpacing.m))
-            Text(body, style = ChagilTheme.type.bodyLarge, color = c.textSecondary, textAlign = TextAlign.Center)
+            // Centered copy: balance the lines so no word is left alone on the last line.
+            Text(body, style = ChagilTheme.type.bodyLarge.copy(lineBreak = ChagilTheme.type.headline.lineBreak), color = c.textSecondary, textAlign = TextAlign.Center)
         }
         if (primaryText != null || secondaryText != null) {
             Spacer(Modifier.height(ChagilSpacing.xxl))

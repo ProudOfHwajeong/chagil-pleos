@@ -92,7 +92,7 @@ fun SidePanelOverlay(ui: PanelUi, a: PanelActions) = BoxWithConstraints(Modifier
     val t = ChagilTheme.type
     val width = if (widthClassFor(maxWidth) == WidthClass.COMPACT) 560.dp else 720.dp
     Box(
-        Modifier.fillMaxSize().background(c.background.copy(alpha = 0.6f))
+        Modifier.fillMaxSize().background(c.scrim)
             .clickable(interactionSource = remember { MutableInteractionSource() }, indication = null, onClick = a.onClose),
     )
     Column(
@@ -109,8 +109,11 @@ fun SidePanelOverlay(ui: PanelUi, a: PanelActions) = BoxWithConstraints(Modifier
         if (ui.simulation) SimBanner(Modifier.fillMaxWidth())
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text("판정 로그", style = t.title, color = c.text, modifier = Modifier.weight(1f))
-            SourceChip(ui.simulation)
-            Spacer(Modifier.width(ChagilSpacing.s))
+            // In SIMULATION the banner right above already says so; the chip only names a real car signal.
+            if (!ui.simulation) {
+                SourceChip(false)
+                Spacer(Modifier.width(ChagilSpacing.s))
+            }
             TopBarButton("닫기", a.onClose, icon = ChagilIcon.CLOSE)
         }
         // Log: newest at the bottom, auto-scroll.

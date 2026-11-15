@@ -31,7 +31,7 @@ fun SafetyPromptCard(
         SafetyPrompt.CONFIRM_PARK -> PromptCard(
             icon = ChagilIcon.PARK,
             title = "P에 두셨나요?",
-            body = "기어를 P에 두고 시작해요. 차가 P를 읽을 수 없어서 한 번만 확인할게요.",
+            body = "기어를 P에 두고 시작해요.\n차가 기어를 읽지 못해서 한 번만 확인할게요.",
             iconTint = c.attention,
             iconContainer = c.attentionContainer,
             secondaryText = cancelText,

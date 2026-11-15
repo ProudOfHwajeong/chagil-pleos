@@ -200,15 +200,16 @@ private fun CockpitCanvas(
         }
         // Screen-space text (keeps ≥ 24sp regardless of canvas scale)
         drawGearLetters(measurer, c, looks.getValue(ControlPoint.GEAR_SELECTOR), ::toScreen, s)
-        quizMarks.forEach { pt -> drawQuizMark(measurer, c, toScreen(anchors.getValue(pt)), s) }
-        labels.forEach { (pt, text) ->
-            drawCallout(measurer, text, looks.getValue(pt), toScreen(anchors.getValue(pt)), s)
-        }
         // Soft fade at the left/right edges so the dashboard blends into any layout.
+        // Applied before the callouts so a label near the edge is never faded out.
         drawRect(
             Brush.horizontalGradient(0f to Color.Transparent, 0.05f to Color.Black, 0.95f to Color.Black, 1f to Color.Transparent),
             blendMode = BlendMode.DstIn,
         )
+        quizMarks.forEach { pt -> drawQuizMark(measurer, c, toScreen(anchors.getValue(pt)), s) }
+        labels.forEach { (pt, text) ->
+            drawCallout(measurer, text, looks.getValue(pt), toScreen(anchors.getValue(pt)), s)
+        }
     }
 }
 
@@ -316,14 +317,21 @@ private fun DrawScope.drawGear(c: ChagilColors, l: PartLook) {
 }
 
 private fun DrawScope.drawBelt(l: PartLook) {
+    // Shoulder strap as a band: outline, then fill. Unlit it stays faint so it never competes with the
+    // control being taught; as a quiz cell the outline is dashed (same language as the other quiz parts).
     val effect = if (l.dashed) PathEffect.dashPathEffect(floatArrayOf(16f, 10f)) else null
-    val strapAlpha = if (l.glow != null) 1f else 0.55f
-    drawLine(l.stroke.copy(alpha = strapAlpha), Offset(8f, 376f), Offset(196f, 600f), if (l.dashed) 6f else 38f, StrokeCap.Butt, pathEffect = effect)
-    if (!l.dashed) drawLine(l.fill.copy(alpha = strapAlpha), Offset(8f, 376f), Offset(196f, 600f), 30f, StrokeCap.Butt)
+    val lit = l.glow != null
+    val alpha = if (lit) 1f else 0.6f
+    val from = Offset(8f, 376f)
+    val to = Offset(196f, 600f)
+    drawLine(l.stroke.copy(alpha = alpha), from, to, 34f, StrokeCap.Butt, pathEffect = effect)
+    drawLine(if (lit) l.fill else l.fill.copy(alpha = 0.9f), from, to, 27f, StrokeCap.Butt)
     // latch plate
     val a = anchors.getValue(ControlPoint.SEAT_BELT)
     withTransform({ rotate(40f, a) }) {
-        drawRoundRect(l.stroke, Offset(a.x - 30f, a.y - 16f), Size(60f, 32f), CornerRadius(8f), style = Stroke(5f, pathEffect = effect))
+        drawRoundRect(l.fill, Offset(a.x - 30f, a.y - 16f), Size(60f, 32f), CornerRadius(8f))
+        drawRoundRect(l.stroke.copy(alpha = alpha), Offset(a.x - 30f, a.y - 16f), Size(60f, 32f), CornerRadius(8f), style = Stroke(4f, pathEffect = effect))
+        drawRoundRect(l.stroke.copy(alpha = alpha), Offset(a.x - 12f, a.y - 4f), Size(24f, 8f), CornerRadius(4f))
     }
 }
 
@@ -359,7 +367,8 @@ private fun DrawScope.drawCallout(m: TextMeasurer, text: String, l: PartLook, at
         top = at.y + gap
         connectorFrom = Offset(at.x, top)
     }
-    val left = (at.x - w / 2).coerceIn(0f, size.width - w)
+    val edge = 8.dp.toPx()
+    val left = (at.x - w / 2).coerceIn(edge, size.width - w - edge)
     drawLine(l.labelBg, connectorFrom, Offset(at.x, if (top > at.y) at.y + 30f * s else at.y - 30f * s), 3.dp.toPx(), StrokeCap.Round)
     drawRoundRect(l.labelBg, Offset(left, top), Size(w, h), CornerRadius(h / 2))
     drawText(r, topLeft = Offset(left + padH, top + padV))

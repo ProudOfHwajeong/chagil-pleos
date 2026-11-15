@@ -68,7 +68,7 @@ fun TopBarButton(text: String, onClick: () -> Unit, modifier: Modifier = Modifie
             ChagilIconView(icon, c.text, size = 28.dp)
             Spacer(Modifier.width(ChagilSpacing.s))
         }
-        Text(text, style = ChagilTheme.type.label.copy(fontSize = ChagilTheme.type.title.fontSize), color = c.text, maxLines = 1)
+        Text(text, style = ChagilTheme.type.label.copy(fontSize = ChagilTheme.type.bodyLarge.fontSize), color = c.text, maxLines = 1)
     }
 }
 
